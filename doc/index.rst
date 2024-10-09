@@ -8,14 +8,28 @@ Welcome to Neuromorphic Computing documentation for TAU
 
 .. toctree::
    :maxdepth: 2
-   :caption: Devices:
+   :caption: Camera Devices
 
    some-feature.md
    another-feature.md
 
 .. toctree::
    :maxdepth: 2
-   :caption: Tutorials:
+   :caption: Neuromorphic Hardware 
+
+   some-feature.md
+   another-feature.md
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Camera / Loihi Interface 
+
+   some-feature.md
+   another-feature.md
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Tutorials 
 
    some-feature.md
    another-feature.md
