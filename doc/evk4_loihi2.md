@@ -1,4 +1,4 @@
-# Some feature
+# EVK4 Loihi 2
 
 ## Subsection
 

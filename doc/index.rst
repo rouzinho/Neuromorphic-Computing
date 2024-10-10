@@ -7,6 +7,7 @@ Welcome to Neuromorphic Computing documentation for TAU
 ===================================
 
 .. toctree::
+   :hidden:
    :maxdepth: 3
    :caption: Camera Devices
 
@@ -15,6 +16,7 @@ Welcome to Neuromorphic Computing documentation for TAU
    calibration.md
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :caption: Neuromorphic Hardware 
 
@@ -22,6 +24,7 @@ Welcome to Neuromorphic Computing documentation for TAU
    Loihi2_dnf.md
 
 .. toctree::
+   :hidden:
    :maxdepth: 3
    :caption: Camera / Loihi Interface 
 
@@ -30,6 +33,7 @@ Welcome to Neuromorphic Computing documentation for TAU
    prophesee_interface.md
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :caption: Tutorials 
 
