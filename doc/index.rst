@@ -7,29 +7,33 @@ Welcome to Neuromorphic Computing documentation for TAU
 ===================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Camera Devices
 
-   some-feature.md
-   another-feature.md
+   Azure_Kinect.md
+   Prophesee_EVK4.md
+   calibration.md
 
 .. toctree::
    :maxdepth: 2
    :caption: Neuromorphic Hardware 
 
-   some-feature.md
-   another-feature.md
+   Loihi2.md
+   Loihi2_dnf.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Camera / Loihi Interface 
 
-   some-feature.md
-   another-feature.md
+   ros_interface.md
+   kinect_interface.md
+   prophesee_interface.md
 
 .. toctree::
    :maxdepth: 2
    :caption: Tutorials 
 
-   some-feature.md
-   another-feature.md
+   evk4_loihi2.md
+   ros_loihi2.md
+   kinect_loihi2.md
+   sensor_fusion.md
