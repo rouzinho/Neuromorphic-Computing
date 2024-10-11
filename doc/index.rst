@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Neuromorphic Computing with Cameras.
+Neuromorphic Computing with Dynamic Vision System and Depth Camera.
 ===================================
 
 
@@ -16,13 +16,13 @@ The general purpose of the project is to showcase the benefits of using a dynami
 Advantages
 ----------
 
-A dynamic vision sensor generates events when there are changes in the field of view. Specifically, the camera sends ON/OFF events when the brightness rise or diminish respectively.
-In addition, the sensor is able to capture changes with a high temporal fidelity at precise location. Compared to a traditional frame-based camera where the complete scene compose a frame at a specific rate, the DVS is able to capture specific events depending on the rate of changes happening in the visual scene.
-This supports a more efficient computing of data as well and allows a considerable economy in energy consumption. In this documentation, we will focus on the Prophesee EVK4 device.
+A dynamic vision sensor generates events when there are changes in the field of view. Specifically, the camera sends ON/OFF events when the brightness rises or diminishes respectively.
+In addition, the sensor is able to capture changes with a high temporal fidelity and accuracy. Compared to a traditional frame-based camera where the complete scene compose a frame at a specific rate, the DVS is able to capture specific events depending on the rate of changes happening in the visual scene.
+This supports a more efficient computing of data and allows a considerable economy in energy consumption. In this documentation, we will focus on the Prophesee EVK4 device.
 
-A neuromorphic hardware aims to compute information, and more specifically neural networks with a biological approach. Contrary to current hardware (CPU/GPU) where neural networks are synchronously computed, neuromorphic hardware takes example from biological neurons to compute spike of events and thus drastically reducing power consumption.
+A neuromorphic hardware aims to compute information, and more specifically neural networks with a biological approach. Contrary to current hardware (CPU/GPU) where neural networks are synchronously computed, neuromorphic hardware takes example from biological neurons to compute spikes and thus drastically reduce power consumption.
 The spiking neural network models running on neuromorphic chips also offers a significant reduction in time execution and almost completely aligns with DVS. As we will see in the tutorials, the use of neuromorphic chips can even perform post processing filtering without sacrificing execution time. Here, we are going to use the Intel Loihi 2 as neuromorphic hardware.
-  
+
 
 .. toctree::
    :hidden:
