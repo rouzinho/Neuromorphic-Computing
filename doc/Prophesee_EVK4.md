@@ -12,7 +12,34 @@ In our case, we will use a robotic setup where the camera is mounted on top of a
 
 ## Tuning Bias
 
-The most important parameters to consider in order to calibrate the camera to your environment are the [bias](https://docs.prophesee.ai/stable/hw/manuals/biases.html#chapter-biases). A well calibrated camera can make a tremondous difference in the quality of the datas generated. Here, you can see the difference before tuning the bias and after :
+The most important parameters to consider in order to calibrate the camera to your environment are the [bias](https://docs.prophesee.ai/stable/hw/manuals/biases.html#chapter-biases). A well calibrated camera can make a tremondous difference in the quality of the datas generated. As examples, we recorded a ball rolling on the table and displayed the events at 100fps with an accumulation time of 20ms. This sample is a raw recording without any tuning.
 
 ![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/no_bias.gif?raw=true)
 
+In this one, we changed the bias settings.
+
+![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/bias.gif?raw=true)
+
+## Event Processing
+
+In case of noisy lightning with direct sunlight, the anti-flickering parameter can perform some filtering. In our setup, this parameter was not necessary however you can have an insight of what the events should look like.
+
+![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/anti_flicker.gif?raw=true)
+
+The more useful parameter is the event trail settings. Depending on the light source conditions, a moving object always leaves a certain trail of events. We tuned here the trail filtering with a CUT option. 
+
+![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/cut_trail.gif?raw=true)
+
+The KEEP trail option is also available>
+
+![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/keep_trail.gif?raw=true)
+
+## ROI
+
+Finally, it is often necessary to select a Region of Interest for a more efficient generation of events. It allows to remove unnecessary noise and focus on a specific location of the scene.
+
+![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/roi_up.gif?raw=true)
+
+Same ROi but with the object moving horizontally to demonstrate the resized window of events.
+
+![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/roi_left.gif?raw=true)
