@@ -14,6 +14,4 @@ In our case, we will use a robotic setup where the camera is mounted on top of a
 
 The most important parameters to consider in order to calibrate the camera to your environment are the [bias](https://docs.prophesee.ai/stable/hw/manuals/biases.html#chapter-biases). A well calibrated camera can make a tremondous difference in the quality of the datas generated. Here, you can see the difference before tuning the bias and after :
 
-![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/anti_flicker.gif)
-.. image:: anti_flicker.gif
-
+![test](img/anti_flicker.gif)
