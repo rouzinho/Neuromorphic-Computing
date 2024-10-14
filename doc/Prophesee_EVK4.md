@@ -22,8 +22,9 @@ In this one, we changed the bias settings.
 
 ## Event Processing
 
-In case of noisy lightning with direct sunlight, the anti-flickering parameter can perform some filtering. In our setup, this parameter was not necessary however you can have an insight of what the events should look like.
+The details of the following parameters can be found [here](https://docs.prophesee.ai/stable/hw/manuals/esp.html#event-trail-filter-stc-trail)
 
+In case of noisy lightning with direct sunlight, the anti-flickering parameter can perform some filtering. In our setup, this parameter was not necessary however you can have an insight of what the events should look like. 
 ![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/anti_flicker.gif?raw=true)
 
 The more useful parameter is the event trail settings. Depending on the light source conditions, a moving object always leaves a certain trail of events. We tuned here the trail filtering with a CUT option. 
