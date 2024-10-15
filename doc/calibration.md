@@ -89,8 +89,8 @@ python3 calibration.py
 You should see the blinking LED from the DVS for a few second, then the program stop and the position of the point is saved in the txt file.
 ![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/calib_dvs.gif?raw=true)
 
-You can now move the LED to a new location and start again. For an accurate calibration, 8-9 points are necessary.
-Once you have gathered all the points, you can start the script homography.py inside the homography_dvs folder. Before that you should place the 2 text files containings the points inside the homography_dvs folder.
+You can now move the LED to a new location and start again. For an accurate calibration, 8-9 points are necessary. You should place the 2 text files containings the points inside the homography_dvs folder.
+Once you have done that, you can start the script homography.py inside the homography_dvs folder. 
 
 ```
 python3 homography.py
