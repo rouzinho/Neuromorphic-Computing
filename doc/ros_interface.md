@@ -4,4 +4,6 @@ introduce the ros interface for kinect (robot, visualize depthmap). record datas
 
 ## Subsection
 
+pip install rosbags
+pip install rosbags-image
 
