@@ -330,7 +330,7 @@ Here, we begin to connect the elements together according to the platform where 
          self.run_cfg = Loihi1SimCfg(select_tag="fixed_pt")
 ```
 We continue to connect the components togethers by linking the two dense weights to the LIF networks. Then, we properly define dnf1 and dnf2 as dynamic neural fields by applying a convolution with the kernel. In practice, this means that we apply a set of recurrent weights on the LIF network with the gaussian shape of the kernel. A classic gaussian kernel will define excitatory connection at a peak location. In case of a mexican hat gaussian kernel, this will apply a local excitation with a surround inhibition.
-Then, we project dnf1 horizontlly and dnf2 vertically to the projection LIF.
+Then, we project dnf1 horizontally and dnf2 vertically to the projection LIF.
 Finally, we connect the fields to the data listeners and we setup a configuration for the simulation.
 ```
    def run(self):
