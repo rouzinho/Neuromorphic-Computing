@@ -52,5 +52,10 @@ include-system-site-packages = true
 source ~/neuro/bin/activate
 ```
 
+## Learning
+
+You can find all the informations you need to get started on the [website](https://lava-nc.org/lava/notebooks/end_to_end/tutorial00_tour_through_lava.html). The best is to follow the documentation until at least the Remote Memory Access section.
+Regarding the implementation of dynamic neural fields, you can find an introduction [here](https://lava-nc.org/dnf.html), but the [tutorials](https://github.com/lava-nc/lava-dnf/tree/main/tutorials/lava/lib/dnf) on github are the best way to get started.
+
 
 
