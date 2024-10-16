@@ -41,7 +41,7 @@ poetry export --without-hashes -f requirements.txt -o requirements.txt
 pip install --no-cache-dir --no-deps -r requirements.txt
 pip install .
 ```
-Allow your virtual environment to access system libraries. I will support the use of the metavision SDK inside your code.
+Allow your virtual environment to access system libraries. It will support the use of the metavision SDK inside your code.
 ```
 cd ..
 cd neuro/
