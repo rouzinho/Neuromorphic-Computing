@@ -1,4 +1,4 @@
-# Intel Loihi 2
+# Intel Neuromorphic Chip
 
 This page will introduce neuromorphic computing with Intel Loihi 2.
 
@@ -51,4 +51,6 @@ include-system-site-packages = true
 #resource your environment
 source ~/neuro/bin/activate
 ```
+
+
 
