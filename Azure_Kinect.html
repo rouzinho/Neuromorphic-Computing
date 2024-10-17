@@ -1,0 +1,220 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Azure Kinect &mdash; NeuroCam TAU 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Prophesee EVK4" href="Prophesee_EVK4.html" />
+    <link rel="prev" title="Neuromorphic Computing with Dynamic Vision System and Depth Camera." href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            NeuroCam TAU
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Camera Devices</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Azure Kinect</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ubuntu-20-04">Ubuntu 20.04</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ubuntu-22-04">Ubuntu 22.04</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#runing-in-standalone">Runing in standalone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#runing-through-ros">Runing through ROS</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Prophesee_EVK4.html">Prophesee EVK4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calibration.html">Calibration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Neuromorphic Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2.html">Intel Neuromorphic Chip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2_dnf.html">DNF Loihi 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Camera / Loihi Interface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ros_interface.html">ROS interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_interface.html">Kinect Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophesee_interface.html">EVK4 interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="evk4_loihi2.html">EVK4 Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_loihi2.html">ROS Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_loihi2.html">Kinect Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensor_fusion.html">Sensor Fusion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NeuroCam TAU</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Azure Kinect</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Azure_Kinect.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="azure-kinect">
+<h1>Azure Kinect<a class="headerlink" href="#azure-kinect" title="Link to this heading"></a></h1>
+<p>The Azure Kinect is a color/depth camera. We will use the depth data to perform sensor fusion with the Prophesee EVK4.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>The installation has been tested for Ubuntu 20.04 and 22.04. While it is not officially supported, a quick hack makes everything work. We developed the sensor fusion framework to run with the Kinect standalone pipeline and the ROS Wrapper. ROS is a middleware of communication that facilitates data streaming and processing. You can install ROS depending on your operating system <a class="reference external" href="https://wiki.ros.org/ROS/Installation">here</a>. Here we will use ROS Noetic as ROS2 isn’t officially supported by the Azure Kinect ROS wrapper.
+There is a conflict between the Prophesee camera and the Kinect, so we run the ros kinect on ubuntu 20.04 and the EVK4 on ubuntu 22.04. However it’s possible to install the kinect on Ubuntu 22.04 without the ROS support.</p>
+<section id="ubuntu-20-04">
+<h3>Ubuntu 20.04<a class="headerlink" href="#ubuntu-20-04" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">microsoft</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keys</span><span class="o">/</span><span class="n">microsoft</span><span class="o">.</span><span class="n">asc</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">add</span> <span class="o">-</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">add</span><span class="o">-</span><span class="n">repository</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">microsoft</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="mf">18.04</span><span class="o">/</span><span class="n">prod</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">microsoft</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="mf">18.04</span><span class="o">/</span><span class="n">prod</span><span class="o">.</span><span class="n">list</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">microsoft</span><span class="o">-</span><span class="n">prod</span><span class="o">.</span><span class="n">list</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">microsoft</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keys</span><span class="o">/</span><span class="n">microsoft</span><span class="o">.</span><span class="n">asc</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">add</span> <span class="o">-</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">libk4a1</span><span class="mf">.3</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">libk4abt1</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">k4a</span><span class="o">-</span><span class="n">tools</span><span class="o">=</span><span class="mf">1.3.0</span>
+</pre></div>
+</div>
+<p>Clone the official Azure Kinect repository and copy the udev rules so the camera can start correctly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">microsoft</span><span class="o">/</span><span class="n">Azure</span><span class="o">-</span><span class="n">Kinect</span><span class="o">-</span><span class="n">Sensor</span><span class="o">-</span><span class="n">SDK</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">Azure</span><span class="o">-</span><span class="n">Kinect</span><span class="o">-</span><span class="n">Sensor</span><span class="o">-</span><span class="n">SDK</span><span class="o">/</span>
+<span class="n">sudo</span> <span class="n">cp</span> <span class="mi">99</span><span class="o">-</span><span class="n">k4a</span><span class="o">.</span><span class="n">rules</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">udev</span><span class="o">/</span><span class="n">rules</span><span class="o">.</span><span class="n">d</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>You can check that the camera is working by running the command (reboot the computer if necessary) :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">k4aviewer</span>
+</pre></div>
+</div>
+<p>Then install the ROS Wrapper inside your ROS workspace :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="s2">&quot;your_workspace/src&quot;</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">microsoft</span><span class="o">/</span><span class="n">Azure_Kinect_ROS_Driver</span>
+<span class="n">cd</span> <span class="o">..</span>
+<span class="n">catkin_make</span>
+</pre></div>
+</div>
+</section>
+<section id="ubuntu-22-04">
+<h3>Ubuntu 22.04<a class="headerlink" href="#ubuntu-22-04" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">libgl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsoundio</span><span class="o">-</span><span class="n">dev</span> <span class="n">libvulkan</span><span class="o">-</span><span class="n">dev</span> <span class="n">libx11</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxcursor</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxinerama</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxrandr</span><span class="o">-</span><span class="n">dev</span> <span class="n">libusb</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libssl</span><span class="o">-</span><span class="n">dev</span> <span class="n">libudev</span><span class="o">-</span><span class="n">dev</span> <span class="n">mesa</span><span class="o">-</span><span class="n">common</span><span class="o">-</span><span class="n">dev</span> <span class="n">uuid</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">opencv</span><span class="o">-</span><span class="n">python</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">microsoft</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keys</span><span class="o">/</span><span class="n">microsoft</span><span class="o">.</span><span class="n">asc</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">trusted</span><span class="o">.</span><span class="n">gpg</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">microsoft</span><span class="o">.</span><span class="n">asc</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">add</span><span class="o">-</span><span class="n">repository</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">microsoft</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="mf">20.04</span><span class="o">/</span><span class="n">prod</span>\<span class="n">n</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">microsoft</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keys</span><span class="o">/</span><span class="n">microsoft</span><span class="o">.</span><span class="n">asc</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">add</span> <span class="o">-</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">add</span><span class="o">-</span><span class="n">repository</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">microsoft</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="mf">18.04</span><span class="o">/</span><span class="n">prod</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">microsoft</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="mf">18.04</span><span class="o">/</span><span class="n">prod</span><span class="o">.</span><span class="n">list</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">microsoft</span><span class="o">-</span><span class="n">prod</span><span class="o">.</span><span class="n">list</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">microsoft</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keys</span><span class="o">/</span><span class="n">microsoft</span><span class="o">.</span><span class="n">asc</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">add</span> <span class="o">-</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">libk4a1</span><span class="mf">.4</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">libk4a1</span><span class="mf">.4</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">wget</span> <span class="n">mirrors</span><span class="o">.</span><span class="n">kernel</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">pool</span><span class="o">/</span><span class="n">universe</span><span class="o">/</span><span class="n">libs</span><span class="o">/</span><span class="n">libsoundio</span><span class="o">/</span><span class="n">libsoundio1_1</span><span class="mf">.1.0</span><span class="o">-</span><span class="mi">1</span><span class="n">_amd64</span><span class="o">.</span><span class="n">deb</span>
+<span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">libsoundio1_1</span><span class="mf">.1.0</span><span class="o">-</span><span class="mi">1</span><span class="n">_amd64</span><span class="o">.</span><span class="n">deb</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">k4a</span><span class="o">-</span><span class="n">tools</span>
+</pre></div>
+</div>
+<p>Clone the Azure Kinect SDK to copy the udev rules :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">microsoft</span><span class="o">/</span><span class="n">Azure</span><span class="o">-</span><span class="n">Kinect</span><span class="o">-</span><span class="n">Sensor</span><span class="o">-</span><span class="n">SDK</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">Azure</span><span class="o">-</span><span class="n">Kinect</span><span class="o">-</span><span class="n">Sensor</span><span class="o">-</span><span class="n">SDK</span><span class="o">/</span>
+<span class="n">sudo</span> <span class="n">cp</span> <span class="mi">99</span><span class="o">-</span><span class="n">k4a</span><span class="o">.</span><span class="n">rules</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">udev</span><span class="o">/</span><span class="n">rules</span><span class="o">.</span><span class="n">d</span><span class="o">/</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="runing-in-standalone">
+<h2>Runing in standalone<a class="headerlink" href="#runing-in-standalone" title="Link to this heading"></a></h2>
+<p>You can check if the kinect works properly :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">k4aviewer</span>
+</pre></div>
+</div>
+<p>Then you need to select the ID of the kinect in the list, open the device then start the device. You should see the different sensors in action.</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/kinect_test.gif?raw=true" /></p>
+</section>
+<section id="runing-through-ros">
+<h2>Runing through ROS<a class="headerlink" href="#runing-through-ros" title="Link to this heading"></a></h2>
+<p>You only need to go through your workspace and start the launchfile :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="s2">&quot;your_ros_workspace&quot;</span>
+<span class="n">catkin_make</span>  <span class="c1">#if you didn&#39;t compile yet</span>
+<span class="n">source</span> <span class="n">dev</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">bash</span> <span class="c1">#if your shell if bash</span>
+<span class="n">roslaunch</span> <span class="n">azure_kinect_ROS_Driver</span> <span class="n">driver</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>A ROS node starting the kinect and processing the data should be started.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Neuromorphic Computing with Dynamic Vision System and Depth Camera." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Prophesee_EVK4.html" class="btn btn-neutral float-right" title="Prophesee EVK4" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright workshop participant.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

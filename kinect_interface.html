@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kinect Interface &mdash; NeuroCam TAU 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="EVK4 interface" href="prophesee_interface.html" />
+    <link rel="prev" title="ROS interface" href="ros_interface.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            NeuroCam TAU
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Camera Devices</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Azure_Kinect.html">Azure Kinect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prophesee_EVK4.html">Prophesee EVK4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calibration.html">Calibration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Neuromorphic Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2.html">Intel Neuromorphic Chip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2_dnf.html">DNF Loihi 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Camera / Loihi Interface</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ros_interface.html">ROS interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Kinect Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#kinect-recording">Kinect recording</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#kinect-process">Kinect process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="prophesee_interface.html">EVK4 interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="evk4_loihi2.html">EVK4 Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_loihi2.html">ROS Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_loihi2.html">Kinect Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensor_fusion.html">Sensor Fusion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NeuroCam TAU</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Kinect Interface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/kinect_interface.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kinect-interface">
+<h1>Kinect Interface<a class="headerlink" href="#kinect-interface" title="Link to this heading"></a></h1>
+<p>We will introduce how to record samples from the kinect and explain the process that read depth images from the camera and send them as inputs to the Loihi chip</p>
+<section id="kinect-recording">
+<h2>Kinect recording<a class="headerlink" href="#kinect-recording" title="Link to this heading"></a></h2>
+<p>In order to use the process, you first need to install the pykinect_azure library :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#source your virtualenv</span>
+<span class="n">source</span> <span class="n">neuro</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">pykinect_azure</span>
+</pre></div>
+</div>
+<p>Then you can record a sample by runing this command :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">k4arecorder</span> <span class="o">-</span><span class="n">d</span> <span class="n">WFOV_UNBINNED</span> <span class="o">-</span><span class="n">c</span> <span class="mi">1080</span><span class="n">p</span> <span class="o">-</span><span class="n">r</span> <span class="mi">15</span> <span class="o">-</span><span class="n">l</span> <span class="mi">10</span> <span class="n">wfov</span><span class="o">.</span><span class="n">mkv</span>
+</pre></div>
+</div>
+<p>WFOV_UNBINNED is the option to choose the wide angle of the depth camera. The option -r 15 means that we record at 15fps and -l 10 indicates the length in seconds of the recording. More information on this command can be found <a class="reference external" href="https://learn.microsoft.com/bg-bg/previous-versions/azure/kinect-dk/azure-kinect-recorder">here</a></p>
+</section>
+<section id="kinect-process">
+<h2>Kinect process<a class="headerlink" href="#kinect-process" title="Link to this heading"></a></h2>
+<p>The class can take several parameters such as the size of the depth (1024x1024 for WFOV option). More information about camera parameters are available <a class="reference external" href="https://microsoft.github.io/Azure-Kinect-Sensor-SDK/master/namespace_microsoft_1_1_azure_1_1_kinect_1_1_sensor_ae1bee72789a1fe39e868e5b39ba62108.html">here</a>. The mode parameter indicate how you want to process the depth images : depth, smooth depth, tranformed (transform depth to color frame - removing the fisheye distortion). Here is an example :
+<img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/smoothdepth.gif?raw=true" />
+<img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/transformed.gif?raw=true" /></p>
+<p>The other parameters are min_depth and max_depth, which defines a depth you want to monitor. Everything outside this interval will by excluded from the depth image.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.decorator</span> <span class="kn">import</span> <span class="n">implements</span><span class="p">,</span> <span class="n">requires</span><span class="p">,</span> <span class="n">tag</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.model.py.model</span> <span class="kn">import</span> <span class="n">PyLoihiProcessModel</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.model.py.ports</span> <span class="kn">import</span> <span class="n">PyOutPort</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.model.py.type</span> <span class="kn">import</span> <span class="n">LavaPyType</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.process.ports.ports</span> <span class="kn">import</span> <span class="n">OutPort</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.process.process</span> <span class="kn">import</span> <span class="n">AbstractProcess</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.resources</span> <span class="kn">import</span> <span class="n">CPU</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.sync.protocols.loihi_protocol</span> <span class="kn">import</span> <span class="n">LoihiProtocol</span>
+<span class="kn">import</span> <span class="nn">pykinect_azure</span> <span class="k">as</span> <span class="nn">pykinect</span>
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">from</span> <span class="nn">pykinect_azure.k4a</span> <span class="kn">import</span> <span class="n">_k4a</span>
+<span class="kn">from</span> <span class="nn">pykinect_azure.k4a.image</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="k">class</span> <span class="nc">KinectReader</span><span class="p">(</span><span class="n">AbstractProcess</span><span class="p">):</span>
+<span class="w">   </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   Process that read depth images from ros bag file and send them through outport </span>
+
+<span class="sd">   Parameters</span>
+<span class="sd">   ----------</span>
+<span class="sd">   depth_shape: tuple</span>
+<span class="sd">      shape of the depth image.</span>
+<span class="sd">   file_name: str</span>
+<span class="sd">      name of the recording.</span>
+<span class="sd">   mode: str</span>
+<span class="sd">      type of depth image. &quot;depth&quot;,&quot;smooth&quot;,&quot;transformed&quot;</span>
+<span class="sd">   min_depth: int</span>
+<span class="sd">      minimal depth to process.</span>
+<span class="sd">   max_depth: int</span>
+<span class="sd">      maximal depth to process.</span>
+<span class="sd">   resize: tuple</span>
+<span class="sd">      resizing the images if the parameter is set.</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">depth_shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span>
+            <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;depth&quot;</span><span class="p">,</span>
+            <span class="n">min_depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n">max_depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
+            <span class="n">resize</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">filename</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;you must provide the path of a bag&quot;</span>
+         <span class="p">)</span>
+      <span class="k">if</span> <span class="n">mode</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">min_depth</span> <span class="o">=</span> <span class="n">min_depth</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">max_depth</span> <span class="o">=</span> <span class="n">max_depth</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">resize</span> <span class="o">=</span> <span class="n">resize</span>
+      <span class="k">if</span> <span class="n">resize</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">depth_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resize</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">depth_shape</span> <span class="o">=</span> <span class="n">depth_shape</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">depth_out_port</span> <span class="o">=</span> <span class="n">OutPort</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">depth_shape</span><span class="p">)</span>
+      <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+         <span class="n">depth_shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">depth_shape</span><span class="p">,</span>
+         <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+         <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+         <span class="n">min_depth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_depth</span><span class="p">,</span>
+         <span class="n">max_depth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_depth</span><span class="p">,</span>
+         <span class="n">resize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resize</span>
+      <span class="p">)</span>
+
+<span class="c1">#class implementing the bag reader</span>
+<span class="nd">@implements</span><span class="p">(</span><span class="n">proc</span><span class="o">=</span><span class="n">KinectReader</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="n">LoihiProtocol</span><span class="p">)</span>
+<span class="nd">@requires</span><span class="p">(</span><span class="n">CPU</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">LoihiDensePyKinectReader</span><span class="p">(</span><span class="n">PyLoihiProcessModel</span><span class="p">):</span>
+   <span class="n">depth_out_port</span><span class="p">:</span> <span class="n">PyOutPort</span> <span class="o">=</span> <span class="n">LavaPyType</span><span class="p">(</span><span class="n">PyOutPort</span><span class="o">.</span><span class="n">VEC_DENSE</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proc_params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">proc_params</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_file_name</span> <span class="o">=</span> <span class="n">proc_params</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">]</span> 
+      <span class="bp">self</span><span class="o">.</span><span class="n">_depth_shape</span> <span class="o">=</span> <span class="n">proc_params</span><span class="p">[</span><span class="s2">&quot;depth_shape&quot;</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">proc_params</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_min_depth</span> <span class="o">=</span> <span class="n">proc_params</span><span class="p">[</span><span class="s2">&quot;min_depth&quot;</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_max_depth</span> <span class="o">=</span> <span class="n">proc_params</span><span class="p">[</span><span class="s2">&quot;max_depth&quot;</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_resize</span> <span class="o">=</span> <span class="n">proc_params</span><span class="p">[</span><span class="s2">&quot;resize&quot;</span><span class="p">]</span>
+      <span class="n">pykinect</span><span class="o">.</span><span class="n">initialize_libraries</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_playback</span> <span class="o">=</span> <span class="n">pykinect</span><span class="o">.</span><span class="n">start_playback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file_name</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_playback_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_playback</span><span class="o">.</span><span class="n">get_record_configuration</span><span class="p">()</span>
+
+   <span class="k">def</span> <span class="nf">run_spk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1">#print(&quot;get image&quot;)</span>
+      <span class="n">depth_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_kinect_frame</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">depth_out_port</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">depth_image</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">_get_kinect_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1">#get next frame</span>
+      <span class="n">ret</span><span class="p">,</span> <span class="n">capture</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_playback</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+      <span class="n">depth_image</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="n">cv_image_resized</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="c1">#setup mode</span>
+      <span class="k">if</span> <span class="n">ret</span><span class="p">:</span>
+         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="s2">&quot;depth&quot;</span><span class="p">:</span>
+            <span class="n">ret_depth</span><span class="p">,</span> <span class="n">depth_image</span> <span class="o">=</span> <span class="n">capture</span><span class="o">.</span><span class="n">get_depth_image</span><span class="p">()</span>
+         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="s2">&quot;smooth&quot;</span><span class="p">:</span>
+            <span class="n">ret_depth</span><span class="p">,</span> <span class="n">depth_image</span> <span class="o">=</span> <span class="n">capture</span><span class="o">.</span><span class="n">get_smooth_depth_image</span><span class="p">()</span>
+         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="s2">&quot;transformed&quot;</span><span class="p">:</span>
+            <span class="n">ret_depth</span><span class="p">,</span> <span class="n">depth_image</span> <span class="o">=</span> <span class="n">capture</span><span class="o">.</span><span class="n">get_transformed_depth_image</span><span class="p">()</span>
+         <span class="c1">#resize to param size</span>
+         <span class="n">cv_image_resized</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">depth_image</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_resize</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">_resize</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">interpolation</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">INTER_AREA</span><span class="p">)</span>
+         <span class="c1">#exclude depth values not between min_depth and max_depth</span>
+         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cv_image_resized</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cv_image_resized</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+               <span class="k">if</span> <span class="n">cv_image_resized</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_depth</span> <span class="ow">or</span> <span class="n">cv_image_resized</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_depth</span><span class="p">:</span>
+                  <span class="n">cv_image_resized</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="n">cv_image_resized</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_resize</span><span class="p">))</span>
+
+      <span class="k">return</span> <span class="n">cv_image_resized</span>
+   
+   <span class="k">def</span> <span class="nf">_pause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Pause was called by the runtime&quot;&quot;&quot;</span>
+      <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_pause</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">t_pause</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time_ns</span><span class="p">()</span>
+
+   <span class="k">def</span> <span class="nf">_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Stop was called by the runtime&quot;&quot;&quot;</span>
+      <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span>   
+</pre></div>
+</div>
+<p>The use of this process will be demonstrated in the tutorial section.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ros_interface.html" class="btn btn-neutral float-left" title="ROS interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="prophesee_interface.html" class="btn btn-neutral float-right" title="EVK4 interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright workshop participant.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neuromorphic Computing with Dynamic Vision System and Depth Camera. &mdash; NeuroCam TAU 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Azure Kinect" href="Azure_Kinect.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            NeuroCam TAU
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Camera Devices</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Azure_Kinect.html">Azure Kinect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prophesee_EVK4.html">Prophesee EVK4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calibration.html">Calibration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Neuromorphic Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2.html">Intel Neuromorphic Chip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2_dnf.html">DNF Loihi 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Camera / Loihi Interface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ros_interface.html">ROS interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_interface.html">Kinect Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophesee_interface.html">EVK4 interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="evk4_loihi2.html">EVK4 Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_loihi2.html">ROS Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_loihi2.html">Kinect Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensor_fusion.html">Sensor Fusion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">NeuroCam TAU</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Neuromorphic Computing with Dynamic Vision System and Depth Camera.</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="neuromorphic-computing-with-dynamic-vision-system-and-depth-camera">
+<h1>Neuromorphic Computing with Dynamic Vision System and Depth Camera.<a class="headerlink" href="#neuromorphic-computing-with-dynamic-vision-system-and-depth-camera" title="Link to this heading"></a></h1>
+<section id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Link to this heading"></a></h2>
+<p>The point of this documentation is to describe and provide examples on how to use a depth camera and a dynamic vision sensor. In addition, the documentation introduces the use of neuromorphic hardware to compute data generated by the different cameras.
+The general purpose of the project is to showcase the benefits of using a dynamic vision sensor as well as the processing of events on neuromorphic hardware.</p>
+</section>
+<section id="advantages">
+<h2>Advantages<a class="headerlink" href="#advantages" title="Link to this heading"></a></h2>
+<p>A dynamic vision sensor generates events when there are changes in the field of view. Specifically, the camera sends ON/OFF events when the brightness rises or diminishes respectively.
+In addition, the sensor is able to capture changes with a high temporal fidelity and accuracy. Compared to a traditional frame-based camera where the complete scene compose a frame at a specific rate, the DVS is able to capture specific events depending on the rate of changes happening in the visual scene.
+This supports a more efficient computing of data and allows a considerable economy in energy consumption. In this documentation, we will focus on the Prophesee EVK4 device.</p>
+<p>A neuromorphic hardware aims to compute information, and more specifically neural networks with a biological approach. Contrary to current hardware (CPU/GPU) where neural networks are synchronously computed, neuromorphic hardware takes example from biological neurons to compute spikes and thus drastically reduce power consumption.
+The spiking neural network models running on neuromorphic chips also offers a significant reduction in time execution and almost completely aligns with DVS. As we will see in the tutorials, the use of neuromorphic chips can even perform post processing filtering without sacrificing execution time. Here, we are going to use the Intel Loihi 2 as neuromorphic hardware.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Azure_Kinect.html" class="btn btn-neutral float-right" title="Azure Kinect" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright workshop participant.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
