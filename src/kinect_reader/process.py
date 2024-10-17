@@ -1,30 +1,3 @@
-# Kinect Interface
-
-We will introduce how to record samples from the kinect and explain the process that read depth images from the camera and send them as inputs to the Loihi chip 
-
-## Kinect recording
-
-In order to use the process, you first need to install the pykinect_azure library :
-```
-#source your virtualenv
-source neuro/bin/activate
-pip install pykinect_azure
-```
-
-Then you can record a sample by runing this command :
-```
-k4arecorder -d WFOV_UNBINNED -c 1080p -r 15 -l 10 wfov.mkv
-```
-WFOV_UNBINNED is the option to choose the wide angle of the depth camera. The option -r 15 means that we record at 15fps and -l 10 indicates the length in seconds of the recording. More information on this command can be found [here](https://learn.microsoft.com/bg-bg/previous-versions/azure/kinect-dk/azure-kinect-recorder)
-
-## Kinect process
-
-The class can take several parameters such as the size of the depth (1024x1024 for WFOV option). More information about camera parameters are available [here](https://microsoft.github.io/Azure-Kinect-Sensor-SDK/master/namespace_microsoft_1_1_azure_1_1_kinect_1_1_sensor_ae1bee72789a1fe39e868e5b39ba62108.html). The mode parameter indicate how you want to process the depth images : depth, smooth depth, tranformed (transform depth to color frame - removing the fisheye distortion). Here is an example :
-![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/smoothdepth.gif?raw=true)
-![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/transformed.gif?raw=true)
-
-The other parameters are min_depth and max_depth, which defines a depth you want to monitor. Everything outside this interval will by excluded from the depth image.
-```
 import sys
 import numpy as np
 import time
@@ -141,6 +114,7 @@ class LoihiDensePyKinectReader(PyLoihiProcessModel):
          cv_image_resized = np.zeros((self._resize))
 
       return cv_image_resized
+
    
    def _pause(self):
       """Pause was called by the runtime"""
@@ -149,8 +123,5 @@ class LoihiDensePyKinectReader(PyLoihiProcessModel):
 
    def _stop(self) -> None:
       """Stop was called by the runtime"""
-      super()._stop()   
-```
-
-The use of this process will be demonstrated in the tutorial section.
-
+      super()._stop()
+      
