@@ -90,37 +90,25 @@ class LoihiPyBagReaderDVS(PyLoihiProcessModel):
       self._ros_t0 = 0
 
    def run_spk(self):
-      #print("get image")
-      #print("sp0")
       dvs_time = self.t_in.recv()
-      #print("sp1")
       if self._first:
          self._ros_t0 = self._ros_array[0][1]
          self._first = False
-      #print("sp2")
       et_ros = self._ros_array[self._ind_rosbag][1] - self._ros_t0
-      #print("sp3")
-      print("ros seq : ",self._ros_seq)
+      #print("ros seq : ",self._ros_seq)
       if (dvs_time[0] >= et_ros or dvs_time[0] == 0) and self._ros_seq < self._ind_l-1:
          self._ros_seq = self._ros_array[self._ind_rosbag][0]
          self._ind_rosbag += 1
-      #print("sp4")
       depth = self._get_bag_frame()
-      #print("sp5")
-      self.depth_out_port.send(depth)
-      #print("sp6")
-      
+      self.depth_out_port.send(depth)     
 
    def _get_bag_frame(self):
       img = None
       with AnyReader([self._path], default_typestore=self._typestore) as reader:
          connections = [x for x in reader.connections if x.topic == self._topic]
          for connection, timestamp, rawdata in reader.messages(connections=connections):
-               #print("sp7")
                msg = reader.deserialize(rawdata, connection.msgtype)
-               #print("sp8")
                if msg.header.seq == self._ros_seq:
-                  #print("sp9")
                   img = message_to_cvimage(msg)
                   if self._resize is not None:
                      img = cv2.resize(img, (self._depth_shape[1],self._depth_shape[0]),  interpolation = cv2.INTER_NEAREST)
