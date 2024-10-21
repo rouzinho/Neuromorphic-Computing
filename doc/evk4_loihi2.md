@@ -76,3 +76,88 @@ The original data were a hand swiping in front of the camera and a rectangle LEG
 Hand Swipe            |  Rectangle Moving
 :-------------------------:|:-------------------------:
 ![](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/hand_swipe.gif?raw=true)  |  ![](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/rect_prophesee.gif?raw=true) 
+
+The results of these events running on Loihi are the following :
+
+Hand Swipe Loihi            |  Rectangle Moving Loihi
+:-------------------------:|:-------------------------:
+![](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/hand_swipe_loihi.gif?raw=true)  |  ![](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/rect_opt_loihi.gif?raw=true) 
+
+
+## Loihi with DNFs
+
+It is possible to apply some parameters to the LIF in order to make them behave like a dynamic neural field. For a selective field, add this code at the begining :
+
+```
+multipeak_dnf_default_config = {
+    "in_conn": {
+        "weight": 8
+    },
+    "lif": {"du": 2000,
+            "dv": 2000,
+            "vth": 25
+
+            },
+    "rec_conn": {
+        "amp_exc": 14,
+        "width_exc": [5, 5],
+        "amp_inh": -10,
+        "width_inh": [9, 9]
+    },
+    "out_conn": {
+        "weight": 100,
+    }
+}
+
+selective_dnf_default_config = {
+    "lif": {"du": 2009,
+            "dv": 2047,
+            "vth": 15
+            },
+    "rec_conn": {
+        "amp_exc": 7,
+        "width_exc": [15, 15],
+        "global_inh": -5
+    }
+}
+```
+
+It will define the parameters of the selective and multipeak activation kernel. Then connect them :
+
+```
+def _create_processes(self) -> None:
+      self.camera = PropheseeCamera(**self.prophesee_input_config)
+      self.scaled_shape = (self.camera.shape[2],self.camera.shape[3])
+      self.shape_grid = self.scaled_shape
+      #self.lif_inp = LIF(shape=self.scaled_shape, **self.lif_config)
+      self.dnf_multipeak = LIF(shape=self.scaled_shape,**self.multipeak_lif_params)
+      self.dnf_selective = LIF(shape=self.scaled_shape,**self.selective_lif_params)
+      self.py_receiver = RingBuffer(shape=self.scaled_shape, buffer=self.time_steps)
+
+   def _connect_processes(self) -> None:
+      #No real multipeaks, only the weights value
+      connect(self.camera.s_out.reshape(self.scaled_shape), self.dnf_multipeak.a_in,
+                 ops=[Weights(**self.multipeak_in_params)])
+
+      
+      #selective
+      connect(self.dnf_multipeak.s_out, self.dnf_selective.a_in,
+                ops=[Weights(**self.multipeak_out_params)])
+
+        # Connections around selective dnf
+      connect(self.dnf_selective.s_out, self.dnf_selective.a_in,
+               ops=[Convolution(SelectiveKernel(**self.selective_rec_params))])
+
+      self.dnf_selective.s_out.connect(self.py_receiver.a_in)
+```
+
+ The selective field will rpovide this result with the LEGO toy :
+ ![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/selective_dnf.gif?raw=true)
+
+ If we apply a multipeak kernel with specific parameters, it can create a working memory by keeping a trail of the events :
+
+ ![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/multi_dnf.gif?raw=true)
+
+ With different parameters, the traces can be more sparse :
+
+ ![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/multi_dnf_big.gif?raw=true)
