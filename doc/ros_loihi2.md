@@ -2,9 +2,9 @@
 
 This tutorial will show how to play a rosbag of depth images to Loihi.
 
-## The interface
+## The interface in standalone
 
-We are going to create a python class that uses the ROS interface :
+We are going to create a python class that uses the ROS interface without the synchronization of timestamps.
 
 ```
 lif_default_config = {

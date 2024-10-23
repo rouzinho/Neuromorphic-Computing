@@ -1,7 +1,9 @@
 # Kinect Loihi 2
 
-Complete process that read images from kinect and run them on loihi. Examples (filtering depth).
+This tutorial will show how to use the kinect interface in standalone in order to run depth images on Loihi.
 
-## Subsection
+## Kinect interface
+
+The code 
 
 
