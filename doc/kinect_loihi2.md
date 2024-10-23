@@ -63,7 +63,7 @@ Here, we only need to create two simple processes and connect the KinectReader w
 
 If we change the mode to "transform" and keep the same min-max values, we remove the fisheye distortion of the image :
 
-![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/transform_object.gif?raw=true)
+![test](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/transformed_object.gif?raw=true)
 
 By changing the depth values, it is possible to select both object and robot spiking :
 
