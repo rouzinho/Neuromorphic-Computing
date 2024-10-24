@@ -1,12 +1,5 @@
-# Sensor Fusion
+#!/usr/bin/env python3
 
-In thes tutorial, we will demonstrate the use of the ROS-Loihi and EVK4-Loihi interfaces to perform sensor fusion. The Goal is to be able to track an object when it's in motion as well as to locate it while it remains static. The depth images are not temporally efficient due to the low frame rate but they remain precise to represent a static object. On the opposite, the event camera is endowed with a high temporal fidelity and computing efficiency for object in motion but is not adapted to keep a track on static objects.
-
-## Code
-
-For this example, we will use the ros-loihi and evk4-loihi versions that take into account the synchronization. Indeed, instead of running two parallel processes (one ros, one revk4), it is more efficient to begin by processing the events and send timestamps information. In turn, the ros-loihi interface will send depth images synchronized with the processed events. This requires for both events and depth recordings to begin at the same time.
-
-```
 import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
@@ -50,6 +43,15 @@ from IPython import display
 from bags_reader.process_sync import BagReaderSync, LoihiPyBagReaderDVS
 Loihi2.preferred_partition = 'oheogulch'
 loihi2_is_available = Loihi2.is_loihi2_available
+
+if loihi2_is_available:
+    print(f'Running on {Loihi2.partition}')
+    from lava.proc.embedded_io.spike import PyToNxAdapter, NxToPyAdapter
+    
+else:
+    print("Loihi2 compiler is not available in this system. "
+          "This tutorial will execute on CPU backend.")
+    
 
 prophesee_input_default_config = {
     "filename": "/home/altair/Postdoc/Codes/samples/rect_fast_cut_cd.dat",
@@ -100,10 +102,7 @@ rosbag_default_config = {
     "sync": True,
     "resize": (64,120)
 }
-```
-We begin by defining the interfaces parameters, they remain the same as in the standalone versions.
 
-```
 class Architecture:
    def __init__(self,num_steps: int,use_loihi2: bool) -> None:
       self.time_steps = num_steps
@@ -153,9 +152,76 @@ class Architecture:
       run_cnd = RunSteps(num_steps=self.time_steps)
       run_cnd_ros = RunSteps(num_steps=30)
       self.camera_dvs.run(condition=run_cnd, run_cfg=self.run_cfg_dvs)
-```
-Here, the connections are the followings : DVS -> ROS-Loihi->LIF_ROS, DVS->LIF_DVS, LIF_DVS and LIF_ROS -> LIF_FUSION.
 
-The result :
+   def plot(self):
+      # Get probed data from monitors
+      print("gathering datas...")
+      self.data_dvs = self.py_receiver.data.get().transpose()
+      self.data_dvs = np.transpose(self.data_dvs,(0,2,1))
+      self.data_ros = self.py_receiver_ros.data.get().transpose()
+      self.data_ros = np.transpose(self.data_ros,(0,2,1))
+      self.data_fusion = self.py_receiver_fusion.data.get().transpose()
+      self.data_fusion = np.transpose(self.data_fusion,(0,2,1))
+      print("shape dvs : ",self.data_dvs.shape)
+      print("shape ros : ",self.data_ros.shape)
+      print("shape fusion : ",self.data_fusion.shape)
+      
+      # Stop the execution of the network
+      self.camera_dvs.stop()
+      # Generate an animated plot from the probed data
+      self.grid_shape = (self.scaled_shape[0],self.scaled_shape[1])
+      print(self.grid_shape)
+      self.grid_dvs = np.zeros(self.grid_shape)
+      self.grid_ros = np.zeros(self.grid_shape)
+      self.grid_fusion = np.zeros(self.grid_shape)
+      #self.fig, self.axs = plt.subplots(2, 2)
+      self.fig = plt.figure()
+      gs = gridspec.GridSpec(2,2)
+      self.ax0 = self.fig.add_subplot(gs[0,0])
+      self.ax1 = self.fig.add_subplot(gs[0,1])
+      self.ax2 = self.fig.add_subplot(gs[1,:])
+      self.ax0.set_title("Dynamic Vision Sensor")
+      self.ax1.set_title("Kinect Depth Camera")
+      self.ax2.set_title("Fusion")
+      self.im0 = self.ax0.imshow(self.grid_dvs, vmin=0.0, vmax=1.0,animated=True)
+      self.im1 = self.ax1.imshow(self.grid_ros, vmin=0.0, vmax=1.0,animated=True)
+      self.im2 = self.ax2.imshow(self.grid_fusion, vmin=0.0, vmax=1.0,animated=True)
+      anim = matplotlib.animation.FuncAnimation(self.fig,self.update_lif, interval=40, init_func=self.setup_plot_lif,frames=self.time_steps, blit=True)
+      plt.show()
+      #anim.save('/home/altair/Postdoc/Videos/spiking_depth_dvs.mp4', writer = 'ffmpeg', fps = 30)
 
-![](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/spiking_fusion.gif?raw=true)
+   def setup_plot_lif(self):
+      self.im0.set_data(self.grid_dvs)
+      self.im1.set_data(self.grid_ros)
+      self.im2.set_data(self.grid_fusion)
+      self.ax0.axis([0, self.grid_shape[1], 0.0, self.grid_shape[0]])
+      self.ax1.axis([0, self.grid_shape[1], 0.0, self.grid_shape[0]])
+      self.ax2.axis([0, self.grid_shape[1], 0.0, self.grid_shape[0]])
+      # For FuncAnimation's sake, we need to return the artist we'll be using
+      # Note that it expects a sequence of artists, thus the trailing comma.
+      return self.im0, self.im1, self.im2, 
+
+   def update_lif(self, i):
+      self.grid_dvs = self.data_dvs[i]
+      self.grid_ros = self.data_ros[i]
+      self.grid_fusion = self.data_fusion[i]
+      #self.grid = np.zeros(self.scaled_shape)
+      self.im0.set_data(self.grid_dvs)
+      self.im1.set_data(self.grid_ros)
+      self.im2.set_data(self.grid_fusion)
+      print(i)
+
+      return self.im0, self.im1, self.im2,
+
+if __name__ == '__main__':
+   architecture = Architecture(120,False)
+   #plt.ion()
+   #plt.show(block=False)
+   architecture.run()
+   print("end")
+   architecture.plot()
+   #plt.show()
+   
+   
+   
+   
