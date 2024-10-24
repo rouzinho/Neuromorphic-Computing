@@ -159,3 +159,5 @@ Here, the connections are the followings : DVS -> ROS-Loihi->LIF_ROS, DVS->LIF_D
 The result :
 
 ![](https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/spiking_fusion.gif?raw=true)
+
+The complete code is available inside the [sensor_fusion folder](https://github.com/rouzinho/Neuromorphic-Computing/tree/main/src/sensor_fusion). Don't forget to copy the bags_reader and dvs folders inside to be able to use the interfaces.
