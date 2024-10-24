@@ -1,0 +1,198 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROS Loihi 2 &mdash; NeuroCam TAU 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Kinect Loihi 2" href="kinect_loihi2.html" />
+    <link rel="prev" title="EVK4 Loihi 2" href="evk4_loihi2.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            NeuroCam TAU
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Camera Devices</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Azure_Kinect.html">Azure Kinect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prophesee_EVK4.html">Prophesee EVK4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calibration.html">Calibration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Neuromorphic Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2.html">Intel Neuromorphic Chip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2_dnf.html">DNF Loihi 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Camera / Loihi Interface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ros_interface.html">ROS interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_interface.html">Kinect Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophesee_interface.html">EVK4 interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="evk4_loihi2.html">EVK4 Loihi 2</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ROS Loihi 2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-interface-in-standalone">The interface in standalone</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_loihi2.html">Kinect Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensor_fusion.html">Sensor Fusion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NeuroCam TAU</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ROS Loihi 2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ros_loihi2.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ros-loihi-2">
+<h1>ROS Loihi 2<a class="headerlink" href="#ros-loihi-2" title="Link to this heading"></a></h1>
+<p>This tutorial will show how to play a rosbag of depth images to Loihi.</p>
+<section id="the-interface-in-standalone">
+<h2>The interface in standalone<a class="headerlink" href="#the-interface-in-standalone" title="Link to this heading"></a></h2>
+<p>We are going to create a python class that uses the ROS interface without the synchronization of timestamps.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lif_default_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;vth&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s2">&quot;du&quot;</span><span class="p">:</span> <span class="mi">550</span><span class="p">,</span>
+    <span class="s2">&quot;dv&quot;</span><span class="p">:</span> <span class="mi">550</span>
+<span class="p">}</span>
+
+<span class="n">rosbag_test_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;depth_shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">642</span><span class="p">,</span><span class="mi">1204</span><span class="p">),</span>
+    <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/altair/Postdoc/Codes/frame_loihi/test_moving.bag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;topic&quot;</span><span class="p">:</span> <span class="s2">&quot;/depth_perception/depth&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;resize&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span><span class="mi">120</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here, we define the parameters for the LIF neural network that will run the spikes from the rosbag. Then we define the parameters of the ros interface. First, we need to setup the image size resolution (1204x642) and the filename of the rosbag (inside the samples <a class="reference external" href="https://github.com/rouzinho/Neuromorphic-Computing/tree/main/src/samples">folder</a>). Then, we should indicate the name of the topic we recorded and the final resolution that will run on the Loihi.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Architecture</span><span class="p">:</span>
+   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">num_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span><span class="n">use_loihi2</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span> <span class="o">=</span> <span class="n">num_steps</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">use_loihi2</span> <span class="o">=</span> <span class="n">use_loihi2</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">bag_input_config</span> <span class="o">=</span> <span class="n">rosbag_test_config</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_config</span> <span class="o">=</span> <span class="n">lif_default_config</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_loihi2</span><span class="p">:</span>
+         <span class="k">pass</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">run_cfg</span> <span class="o">=</span> <span class="n">Loihi2SimCfg</span><span class="p">(</span><span class="n">exception_proc_model_map</span><span class="o">=</span><span class="p">{</span><span class="n">Dense</span><span class="p">:</span> <span class="n">PyDenseModelBitAcc</span><span class="p">,</span><span class="n">LIF</span><span class="p">:</span> <span class="n">PyLifModelBitAcc</span><span class="p">,</span><span class="n">BagReader</span><span class="p">:</span> <span class="n">LoihiDensePyBagReader</span><span class="p">},</span><span class="n">select_tag</span><span class="o">=</span><span class="s2">&quot;fixed_pt&quot;</span><span class="p">)</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">_create_processes</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_connect_processes</span><span class="p">()</span>
+
+   <span class="k">def</span> <span class="nf">_create_processes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera</span> <span class="o">=</span> <span class="n">BagReader</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">bag_input_config</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span><span class="mi">120</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">shape_grid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_inp</span> <span class="o">=</span> <span class="n">LIF</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">lif_config</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">py_receiver</span> <span class="o">=</span> <span class="n">RingBuffer</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span> <span class="n">buffer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">_connect_processes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">depth_out_port</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lif_inp</span><span class="o">.</span><span class="n">a_in</span><span class="p">,</span>
+                 <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">Weights</span><span class="p">(</span><span class="mi">10</span><span class="p">)])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_inp</span><span class="o">.</span><span class="n">s_out</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">py_receiver</span><span class="o">.</span><span class="n">a_in</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1"># Run</span>
+      <span class="n">run_cnd</span> <span class="o">=</span> <span class="n">RunSteps</span><span class="p">(</span><span class="n">num_steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">run_cnd</span><span class="p">,</span> <span class="n">run_cfg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run_cfg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As for the EVK4, we need to create the processes that consists of a BagReader and a LIF network. Then, we connect the output of the BagReader to the input of the LIF. You can find the complete code . Do not forget to copy the folder bags_reader inside the LoihiBag to be able to use the rosbag interface. we run the code with 2 rosbags : one with a static LEGO piece and one with the LEGO moving.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>LEGO static</p></th>
+<th class="head text-center"><p>LEGO Moving</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><img alt="" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/depth_rect_static.gif?raw=true" /></p></td>
+<td class="text-center"><p><img alt="" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/depth_rect_moving.gif?raw=true" /></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="evk4_loihi2.html" class="btn btn-neutral float-left" title="EVK4 Loihi 2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kinect_loihi2.html" class="btn btn-neutral float-right" title="Kinect Loihi 2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright workshop participant.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

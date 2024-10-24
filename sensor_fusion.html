@@ -1,0 +1,286 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sensor Fusion &mdash; NeuroCam TAU 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Kinect Loihi 2" href="kinect_loihi2.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            NeuroCam TAU
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Camera Devices</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Azure_Kinect.html">Azure Kinect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prophesee_EVK4.html">Prophesee EVK4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calibration.html">Calibration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Neuromorphic Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2.html">Intel Neuromorphic Chip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2_dnf.html">DNF Loihi 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Camera / Loihi Interface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ros_interface.html">ROS interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_interface.html">Kinect Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophesee_interface.html">EVK4 interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="evk4_loihi2.html">EVK4 Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_loihi2.html">ROS Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_loihi2.html">Kinect Loihi 2</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sensor Fusion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#code">Code</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NeuroCam TAU</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Sensor Fusion</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sensor_fusion.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sensor-fusion">
+<h1>Sensor Fusion<a class="headerlink" href="#sensor-fusion" title="Link to this heading"></a></h1>
+<p>In thes tutorial, we will demonstrate the use of the ROS-Loihi and EVK4-Loihi interfaces to perform sensor fusion. The Goal is to be able to track an object when it’s in motion as well as to locate it while it remains static. The depth images are not temporally efficient due to the low frame rate but they remain precise to represent a static object. On the opposite, the event camera is endowed with a high temporal fidelity and computing efficiency for object in motion but is not adapted to keep a track on static objects.</p>
+<section id="code">
+<h2>Code<a class="headerlink" href="#code" title="Link to this heading"></a></h2>
+<p>For this example, we will use the ros-loihi and evk4-loihi versions that take into account the synchronization. Indeed, instead of running two parallel processes (one ros, one revk4), it is more efficient to begin by processing the events and send timestamps information. In turn, the ros-loihi interface will send depth images synchronized with the processed events. This requires for both events and depth recordings to begin at the same time.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.gridspec</span> <span class="k">as</span> <span class="nn">gridspec</span>
+<span class="kn">import</span> <span class="nn">matplotlib.animation</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">locale</span>
+<span class="c1">#import pandas</span>
+<span class="c1">#locale.setlocale(locale.LC_ALL, &#39;en_US.UTF-8&#39;)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">lava.magma.core.run_configs</span> <span class="kn">import</span> <span class="n">Loihi1SimCfg</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.run_configs</span> <span class="kn">import</span> <span class="n">Loihi2SimCfg</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.run_conditions</span> <span class="kn">import</span> <span class="n">RunSteps</span><span class="p">,</span> <span class="n">RunContinuous</span>
+<span class="kn">from</span> <span class="nn">lava.lib.dnf.connect.connect</span> <span class="kn">import</span> <span class="n">connect</span>
+<span class="kn">from</span> <span class="nn">lava.lib.dnf.operations.operations</span> <span class="kn">import</span> <span class="n">Weights</span>
+<span class="kn">from</span> <span class="nn">dvs.prophesee_sync</span> <span class="kn">import</span> <span class="n">PropheseeCameraSync</span><span class="p">,</span><span class="n">PyPropheseeCameraEventsIteratorModel</span><span class="p">,</span> <span class="n">PyPropheseeCameraRawReaderModelSync</span>
+<span class="kn">from</span> <span class="nn">dvs.transformation</span> <span class="kn">import</span> <span class="n">Compose</span><span class="p">,</span> <span class="n">Downsample</span><span class="p">,</span> <span class="n">MergePolarities</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.process.process</span> <span class="kn">import</span> <span class="n">AbstractProcess</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.process.ports.ports</span> <span class="kn">import</span> <span class="n">InPort</span><span class="p">,</span> <span class="n">OutPort</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.process.variable</span> <span class="kn">import</span> <span class="n">Var</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.model.py.type</span> <span class="kn">import</span> <span class="n">LavaPyType</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.model.py.ports</span> <span class="kn">import</span> <span class="n">PyInPort</span><span class="p">,</span> <span class="n">PyOutPort</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.sync.protocols.loihi_protocol</span> <span class="kn">import</span> <span class="n">LoihiProtocol</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.model.py.model</span> <span class="kn">import</span> <span class="n">PyLoihiProcessModel</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.decorator</span> <span class="kn">import</span> <span class="n">implements</span><span class="p">,</span> <span class="n">requires</span><span class="p">,</span> <span class="n">tag</span>
+<span class="kn">from</span> <span class="nn">lava.proc.monitor.process</span> <span class="kn">import</span> <span class="n">Monitor</span>
+<span class="kn">from</span> <span class="nn">lava.proc.sparse.process</span> <span class="kn">import</span> <span class="n">Sparse</span>
+<span class="kn">from</span> <span class="nn">lava.proc.dense.process</span> <span class="kn">import</span> <span class="n">Dense</span>
+<span class="kn">from</span> <span class="nn">lava.proc.dense.models</span> <span class="kn">import</span> <span class="n">PyDenseModelBitAcc</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.resources</span> <span class="kn">import</span> <span class="n">CPU</span>
+<span class="kn">from</span> <span class="nn">lava.proc.lif.process</span> <span class="kn">import</span> <span class="n">LIF</span>
+<span class="kn">from</span> <span class="nn">lava.proc.lif.models</span> <span class="kn">import</span> <span class="n">PyLifModelBitAcc</span>
+<span class="kn">from</span> <span class="nn">lava.proc.sparse.models</span> <span class="kn">import</span> <span class="n">PySparseModelBitAcc</span>
+<span class="kn">from</span> <span class="nn">metavision_sdk_cv</span> <span class="kn">import</span> <span class="n">TrailFilterAlgorithm</span><span class="p">,</span> <span class="n">ActivityNoiseFilterAlgorithm</span>
+<span class="kn">from</span> <span class="nn">lava.proc.io.sink</span> <span class="kn">import</span> <span class="n">RingBuffer</span>
+<span class="kn">import</span> <span class="nn">metavision_core</span> <span class="k">as</span> <span class="nn">mv</span>
+<span class="kn">from</span> <span class="nn">lava.utils.system</span> <span class="kn">import</span> <span class="n">Loihi2</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span> <span class="nn">bags_reader.process_sync</span> <span class="kn">import</span> <span class="n">BagReaderSync</span><span class="p">,</span> <span class="n">LoihiPyBagReaderDVS</span>
+<span class="n">Loihi2</span><span class="o">.</span><span class="n">preferred_partition</span> <span class="o">=</span> <span class="s1">&#39;oheogulch&#39;</span>
+<span class="n">loihi2_is_available</span> <span class="o">=</span> <span class="n">Loihi2</span><span class="o">.</span><span class="n">is_loihi2_available</span>
+
+<span class="n">prophesee_input_default_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/altair/Postdoc/Codes/samples/rect_fast_cut_cd.dat&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;transformations&quot;</span><span class="p">:</span> <span class="n">Compose</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">Downsample</span><span class="p">(</span><span class="n">factor</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
+            <span class="n">MergePolarities</span><span class="p">(),</span>
+        <span class="p">]</span>
+    <span class="p">),</span>
+    <span class="s2">&quot;sensor_shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">642</span><span class="p">,</span><span class="mi">1204</span><span class="p">),</span>
+    <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;mixed&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;n_events&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+    <span class="s2">&quot;delta_t&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+    <span class="s2">&quot;num_output_time_bins&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;sync_time&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;flatten&quot;</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">}</span>
+
+<span class="n">lif_ros_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;vth&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="s2">&quot;du&quot;</span><span class="p">:</span> <span class="mi">2250</span><span class="p">,</span>
+    <span class="s2">&quot;dv&quot;</span><span class="p">:</span> <span class="mi">1350</span>
+<span class="p">}</span>
+
+<span class="n">lif_default_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;vth&quot;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span>
+    <span class="s2">&quot;du&quot;</span><span class="p">:</span> <span class="mi">1050</span><span class="p">,</span>
+    <span class="s2">&quot;dv&quot;</span><span class="p">:</span> <span class="mi">1200</span>
+<span class="p">}</span>
+
+<span class="n">lif_fusion_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;vth&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;du&quot;</span><span class="p">:</span> <span class="mi">1650</span><span class="p">,</span>
+    <span class="s2">&quot;dv&quot;</span><span class="p">:</span> <span class="mi">1350</span>
+<span class="p">}</span>
+
+<span class="n">weights_default_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;w_ff&quot;</span><span class="p">:</span> <span class="mi">255</span><span class="p">,</span>
+    <span class="s2">&quot;w_rec&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s2">&quot;w_o&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="s2">&quot;kernel_size&quot;</span><span class="p">:</span> <span class="mi">20</span>
+<span class="p">}</span>
+
+<span class="n">rosbag_default_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;depth_shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">642</span><span class="p">,</span><span class="mi">1204</span><span class="p">),</span>
+    <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/altair/Postdoc/Codes/samples/rect_fast_cut.bag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;topic&quot;</span><span class="p">:</span> <span class="s2">&quot;/depth_perception/depth&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sync&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;resize&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span><span class="mi">120</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We begin by defining the interfaces parameters, they remain the same as in the standalone versions.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Architecture</span><span class="p">:</span>
+   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">num_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span><span class="n">use_loihi2</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span> <span class="o">=</span> <span class="n">num_steps</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">use_loihi2</span> <span class="o">=</span> <span class="n">use_loihi2</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">prophesee_input_config</span> <span class="o">=</span> <span class="n">prophesee_input_default_config</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_config</span> <span class="o">=</span> <span class="n">lif_default_config</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_ros_config</span> <span class="o">=</span> <span class="n">lif_ros_config</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_fusion_config</span> <span class="o">=</span> <span class="n">lif_fusion_config</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">bag_input_config</span> <span class="o">=</span> <span class="n">rosbag_default_config</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">weights_config</span> <span class="o">=</span> <span class="n">weights_default_config</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_loihi2</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">run_cfg</span> <span class="o">=</span> <span class="n">Loihi2HwCfg</span><span class="p">(</span><span class="n">exception_proc_model_map</span><span class="o">=</span>
+                                 <span class="p">{</span><span class="n">PropheseeCameraSync</span><span class="p">:</span> <span class="n">PyPropheseeCameraRawReaderModelSync</span><span class="p">})</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">run_cfg_dvs</span> <span class="o">=</span> <span class="n">Loihi2SimCfg</span><span class="p">(</span>
+               <span class="n">exception_proc_model_map</span><span class="o">=</span><span class="p">{</span><span class="n">Dense</span><span class="p">:</span> <span class="n">PyDenseModelBitAcc</span><span class="p">,</span><span class="n">LIF</span><span class="p">:</span> <span class="n">PyLifModelBitAcc</span><span class="p">,</span><span class="n">PropheseeCameraSync</span><span class="p">:</span> <span class="n">PyPropheseeCameraRawReaderModelSync</span><span class="p">,</span><span class="n">BagReaderSync</span><span class="p">:</span> <span class="n">LoihiPyBagReaderDVS</span><span class="p">})</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">run_cfg_ros</span> <span class="o">=</span> <span class="n">Loihi2SimCfg</span><span class="p">(</span><span class="n">exception_proc_model_map</span><span class="o">=</span><span class="p">{</span><span class="n">Dense</span><span class="p">:</span> <span class="n">PyDenseModelBitAcc</span><span class="p">,</span><span class="n">LIF</span><span class="p">:</span> <span class="n">PyLifModelBitAcc</span><span class="p">,</span><span class="n">BagReaderSync</span><span class="p">:</span> <span class="n">LoihiPyBagReaderDVS</span><span class="p">},</span><span class="n">select_tag</span><span class="o">=</span><span class="s2">&quot;fixed_pt&quot;</span><span class="p">)</span>
+         
+      <span class="bp">self</span><span class="o">.</span><span class="n">_create_processes</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_connect_processes</span><span class="p">()</span>
+      
+   <span class="k">def</span> <span class="nf">_create_processes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera_dvs</span> <span class="o">=</span> <span class="n">PropheseeCameraSync</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">prophesee_input_config</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera_ros</span> <span class="o">=</span> <span class="n">BagReaderSync</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">bag_input_config</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_dvs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_dvs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_dvs</span> <span class="o">=</span> <span class="n">LIF</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">lif_config</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_ros</span> <span class="o">=</span> <span class="n">LIF</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">lif_ros_config</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_fusion</span> <span class="o">=</span> <span class="n">LIF</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">lif_fusion_config</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">py_receiver</span> <span class="o">=</span> <span class="n">RingBuffer</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span> <span class="n">buffer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">py_receiver_ros</span> <span class="o">=</span> <span class="n">RingBuffer</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span> <span class="n">buffer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">py_receiver_fusion</span> <span class="o">=</span> <span class="n">RingBuffer</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span> <span class="n">buffer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">_connect_processes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera_dvs</span><span class="o">.</span><span class="n">s_out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">)</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lif_dvs</span><span class="o">.</span><span class="n">a_in</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera_dvs</span><span class="o">.</span><span class="n">t_out</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_ros</span><span class="o">.</span><span class="n">t_in</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera_ros</span><span class="o">.</span><span class="n">depth_out_port</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lif_ros</span><span class="o">.</span><span class="n">a_in</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_dvs</span><span class="o">.</span><span class="n">s_out</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lif_fusion</span><span class="o">.</span><span class="n">a_in</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_ros</span><span class="o">.</span><span class="n">s_out</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lif_fusion</span><span class="o">.</span><span class="n">a_in</span><span class="p">)</span>
+      <span class="c1">#connect(self.camera_ros.depth_out_port, self.lif_ros.a_in,ops=[Weights(10)])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_dvs</span><span class="o">.</span><span class="n">s_out</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">py_receiver</span><span class="o">.</span><span class="n">a_in</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_ros</span><span class="o">.</span><span class="n">s_out</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">py_receiver_ros</span><span class="o">.</span><span class="n">a_in</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_fusion</span><span class="o">.</span><span class="n">s_out</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">py_receiver_fusion</span><span class="o">.</span><span class="n">a_in</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1"># Run</span>
+      <span class="n">run_cnd</span> <span class="o">=</span> <span class="n">RunSteps</span><span class="p">(</span><span class="n">num_steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span><span class="p">)</span>
+      <span class="n">run_cnd_ros</span> <span class="o">=</span> <span class="n">RunSteps</span><span class="p">(</span><span class="n">num_steps</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera_dvs</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">run_cnd</span><span class="p">,</span> <span class="n">run_cfg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run_cfg_dvs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here, the connections are the followings : DVS -&gt; ROS-Loihi-&gt;LIF_ROS, DVS-&gt;LIF_DVS, LIF_DVS and LIF_ROS -&gt; LIF_FUSION.</p>
+<p>The result :</p>
+<p><img alt="" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/spiking_fusion.gif?raw=true" /></p>
+<p>The complete code is available inside the <a class="reference external" href="https://github.com/rouzinho/Neuromorphic-Computing/tree/main/src/sensor_fusion">sensor_fusion folder</a>. Don’t forget to copy the bags_reader and dvs folders inside to be able to use the interfaces.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="kinect_loihi2.html" class="btn btn-neutral float-left" title="Kinect Loihi 2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright workshop participant.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

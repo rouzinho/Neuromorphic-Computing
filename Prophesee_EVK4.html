@@ -1,0 +1,167 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prophesee EVK4 &mdash; NeuroCam TAU 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Calibration" href="calibration.html" />
+    <link rel="prev" title="Azure Kinect" href="Azure_Kinect.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            NeuroCam TAU
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Camera Devices</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Azure_Kinect.html">Azure Kinect</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Prophesee EVK4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction-and-setup">Introduction and setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tuning-bias">Tuning Bias</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#event-processing">Event Processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#roi">ROI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="calibration.html">Calibration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Neuromorphic Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2.html">Intel Neuromorphic Chip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2_dnf.html">DNF Loihi 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Camera / Loihi Interface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ros_interface.html">ROS interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_interface.html">Kinect Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophesee_interface.html">EVK4 interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="evk4_loihi2.html">EVK4 Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_loihi2.html">ROS Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_loihi2.html">Kinect Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensor_fusion.html">Sensor Fusion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NeuroCam TAU</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Prophesee EVK4</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Prophesee_EVK4.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="prophesee-evk4">
+<h1>Prophesee EVK4<a class="headerlink" href="#prophesee-evk4" title="Link to this heading"></a></h1>
+<p>Introduce EVK4, point to doc, setup example by changing bias etc…
+include use with kinect.
+recording datas. getting right format.</p>
+<section id="introduction-and-setup">
+<h2>Introduction and setup<a class="headerlink" href="#introduction-and-setup" title="Link to this heading"></a></h2>
+<p>The Prophesee EVK4 is a dynamic vision sensor that delivers events when a change of brightness occurs. More precisely, ON and OFF events are generated when the brigthness rises or lowers respectively. It can generate events on a scale of nanoseconds and has a resolution of 1280x720. The installation and setup can be found on the Prophesee <a class="reference external" href="https://docs.prophesee.ai/stable/get_started/index.html">website</a></p>
+<p>In our case, we will use a robotic setup where the camera is mounted on top of a table with a robotic arm in sight. The purpose is to observe objects moving and combine the events generated by the EVK4 with a Kinect depth camera to perform sensor fusion.</p>
+</section>
+<section id="tuning-bias">
+<h2>Tuning Bias<a class="headerlink" href="#tuning-bias" title="Link to this heading"></a></h2>
+<p>The most important parameters to consider in order to calibrate the camera to your environment are the <a class="reference external" href="https://docs.prophesee.ai/stable/hw/manuals/biases.html#chapter-biases">bias</a>. A well calibrated camera can make a tremondous difference in the quality of the datas generated. As examples, we recorded a ball rolling on the table and displayed the events at 100fps with an accumulation time of 20ms. This sample is a raw recording without any tuning.</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/no_bias.gif?raw=true" /></p>
+<p>In this one, we changed the bias settings.</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/bias.gif?raw=true" /></p>
+</section>
+<section id="event-processing">
+<h2>Event Processing<a class="headerlink" href="#event-processing" title="Link to this heading"></a></h2>
+<p>The details of the following parameters can be found <a class="reference external" href="https://docs.prophesee.ai/stable/hw/manuals/esp.html#event-trail-filter-stc-trail">here</a></p>
+<p>In case of noisy lightning with direct sunlight, the anti-flickering parameter can perform some filtering. In our setup, this parameter was not necessary however you can have an insight of what the events should look like.
+<img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/anti_flicker.gif?raw=true" /></p>
+<p>The more useful parameter is the event trail settings. Depending on the light source conditions, a moving object always leaves a certain trail of events. We tuned here the trail filtering with a CUT option.</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/cut_trail.gif?raw=true" /></p>
+<p>The KEEP trail option is also available&gt;</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/keep_trail.gif?raw=true" /></p>
+</section>
+<section id="roi">
+<h2>ROI<a class="headerlink" href="#roi" title="Link to this heading"></a></h2>
+<p>Finally, it is often necessary to select a Region of Interest for a more efficient generation of events. It allows to remove unnecessary noise and focus on a specific location of the scene.</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/roi_up.gif?raw=true" /></p>
+<p>Same ROi but with the object moving horizontally to demonstrate the resized window of events.</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/roi_left.gif?raw=true" /></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Azure_Kinect.html" class="btn btn-neutral float-left" title="Azure Kinect" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="calibration.html" class="btn btn-neutral float-right" title="Calibration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright workshop participant.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

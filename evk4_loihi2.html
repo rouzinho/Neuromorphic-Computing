@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EVK4 Loihi 2 &mdash; NeuroCam TAU 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ROS Loihi 2" href="ros_loihi2.html" />
+    <link rel="prev" title="EVK4 interface" href="prophesee_interface.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            NeuroCam TAU
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Camera Devices</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Azure_Kinect.html">Azure Kinect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prophesee_EVK4.html">Prophesee EVK4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calibration.html">Calibration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Neuromorphic Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2.html">Intel Neuromorphic Chip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2_dnf.html">DNF Loihi 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Camera / Loihi Interface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ros_interface.html">ROS interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_interface.html">Kinect Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophesee_interface.html">EVK4 interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">EVK4 Loihi 2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-events-on-loihi">Running Events on Loihi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#loihi-with-dnfs">Loihi with DNFs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ros_loihi2.html">ROS Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_loihi2.html">Kinect Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensor_fusion.html">Sensor Fusion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NeuroCam TAU</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">EVK4 Loihi 2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/evk4_loihi2.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="evk4-loihi-2">
+<h1>EVK4 Loihi 2<a class="headerlink" href="#evk4-loihi-2" title="Link to this heading"></a></h1>
+<p>This tutorial shows how to use the prophesee interface on Loihi</p>
+<section id="running-events-on-loihi">
+<h2>Running Events on Loihi<a class="headerlink" href="#running-events-on-loihi" title="Link to this heading"></a></h2>
+<p>First, you need to unzip all the archives in the samples <a class="reference external" href="https://github.com/rouzinho/Neuromorphic-Computing/tree/main/src/samples">repository</a>. These are the events captured by the EVK4. Then you need to copy the <a class="reference external" href="https://github.com/rouzinho/Neuromorphic-Computing/tree/main/src/dvs">dvs folder</a> inside the <a class="reference external" href="https://github.com/rouzinho/Neuromorphic-Computing/tree/main/src/prophesee_loihi">prophesee_loihi folder</a>. The complete code that runs the events into the loihi can be found inside the prophesee_loihi folder. In details :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">parameters</span> <span class="k">for</span> <span class="n">the</span> <span class="n">EVK4</span>
+<span class="n">prophesee_input_default_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;rect_1ms_cd.dat&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;transformations&quot;</span><span class="p">:</span> <span class="n">Compose</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">Downsample</span><span class="p">(</span><span class="n">factor</span><span class="o">=</span><span class="mf">0.15</span><span class="p">),</span>
+            <span class="n">MergePolarities</span><span class="p">(),</span>
+        <span class="p">]</span>
+    <span class="p">),</span>
+    <span class="s2">&quot;sensor_shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">720</span><span class="p">,</span> <span class="mi">1280</span><span class="p">),</span> <span class="c1">#480,640 for handswipe.dat because the sample comes from earlier camera version.</span>
+    <span class="s2">&quot;num_output_time_bins&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;sync_time&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;flatten&quot;</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">}</span>
+
+<span class="c1">#Parameters LIF</span>
+<span class="n">lif_default_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;vth&quot;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>
+    <span class="s2">&quot;du&quot;</span><span class="p">:</span> <span class="mi">450</span><span class="p">,</span>
+    <span class="s2">&quot;dv&quot;</span><span class="p">:</span> <span class="mi">700</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We defined the parameters for the camera by providing the filename of the datas (change the name to point towards the file you want in the samples folder), a set of transformations such as a resize and merging of event polarities (ON/OFF). Then, we define parameters for the LIF neural network.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Architecture</span><span class="p">:</span>
+   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">num_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span><span class="n">use_loihi2</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="c1"># EVENT_RECORDING_FILENAME = &quot;/home/altair/Postdoc/Codes/dnf_input/test.raw&quot;</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span> <span class="o">=</span> <span class="n">num_steps</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">use_loihi2</span> <span class="o">=</span> <span class="n">use_loihi2</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">prophesee_input_config</span> <span class="o">=</span> <span class="n">prophesee_input_default_config</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_config</span> <span class="o">=</span> <span class="n">lif_default_config</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">weights_config</span> <span class="o">=</span> <span class="n">weights_default_config</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_loihi2</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">run_cfg</span> <span class="o">=</span> <span class="n">Loihi2HwCfg</span><span class="p">(</span><span class="n">exception_proc_model_map</span><span class="o">=</span>
+                                 <span class="p">{</span><span class="n">PropheseeCamera</span><span class="p">:</span> <span class="n">PyPropheseeCameraRawReaderModel</span><span class="p">})</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">run_cfg</span> <span class="o">=</span> <span class="n">Loihi2SimCfg</span><span class="p">(</span>
+               <span class="n">exception_proc_model_map</span><span class="o">=</span><span class="p">{</span><span class="n">Dense</span><span class="p">:</span> <span class="n">PyDenseModelBitAcc</span><span class="p">,</span><span class="n">LIF</span><span class="p">:</span> <span class="n">PyLifModelBitAcc</span><span class="p">,</span><span class="n">PropheseeCamera</span><span class="p">:</span> <span class="n">PyPropheseeCameraRawReaderModel</span><span class="p">})</span>
+         
+      <span class="bp">self</span><span class="o">.</span><span class="n">_create_processes</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_connect_processes</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here, we declare a new class that will run the simulation. The self.run_cfg variable indicates which models are going to be used for the Dense weights connections and for the prophesee interface. Then, we create and connect the processes together.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="k">def</span> <span class="nf">_create_processes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera</span> <span class="o">=</span> <span class="n">PropheseeCamera</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">prophesee_input_config</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">shape_grid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_inp</span> <span class="o">=</span> <span class="n">LIF</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">lif_config</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">py_receiver</span> <span class="o">=</span> <span class="n">RingBuffer</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span> <span class="n">buffer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">_connect_processes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">s_out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">)</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lif_inp</span><span class="o">.</span><span class="n">a_in</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_inp</span><span class="o">.</span><span class="n">s_out</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">py_receiver</span><span class="o">.</span><span class="n">a_in</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1"># Run</span>
+      <span class="n">run_cnd</span> <span class="o">=</span> <span class="n">RunSteps</span><span class="p">(</span><span class="n">num_steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">run_cnd</span><span class="p">,</span> <span class="n">run_cfg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run_cfg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We begin by creating the camera process, defining the new output shape after resize and declare the LIF network. The connect function links the camera process to the LIF network. Then, we listen to the LIF network to be able to plot the datas. We did not include the weights connections to simplify the understanding of the code. Indeed, we can just lower the threshold value (vth) inside the LIF network to be able to see the neurons spiking.</p>
+<p>The original data were a hand swiping in front of the camera and a rectangle LEGO piece moving at high speed:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Hand Swipe</p></th>
+<th class="head text-center"><p>Rectangle Moving</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><img alt="" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/hand_swipe.gif?raw=true" /></p></td>
+<td class="text-center"><p><img alt="" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/rect_prophesee.gif?raw=true" /></p></td>
+</tr>
+</tbody>
+</table>
+<p>The results of these events running on Loihi are the following :</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Hand Swipe Loihi</p></th>
+<th class="head text-center"><p>Rectangle Moving Loihi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><img alt="" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/hand_swipe_loihi.gif?raw=true" /></p></td>
+<td class="text-center"><p><img alt="" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/rect_opt_loihi.gif?raw=true" /></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="loihi-with-dnfs">
+<h2>Loihi with DNFs<a class="headerlink" href="#loihi-with-dnfs" title="Link to this heading"></a></h2>
+<p>It is possible to apply some parameters to the LIF in order to make them behave like a dynamic neural field. For a selective field, add this code at the begining :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">multipeak_dnf_default_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;in_conn&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="mi">8</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;lif&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;du&quot;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>
+            <span class="s2">&quot;dv&quot;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>
+            <span class="s2">&quot;vth&quot;</span><span class="p">:</span> <span class="mi">25</span>
+
+            <span class="p">},</span>
+    <span class="s2">&quot;rec_conn&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;amp_exc&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
+        <span class="s2">&quot;width_exc&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+        <span class="s2">&quot;amp_inh&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span>
+        <span class="s2">&quot;width_inh&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;out_conn&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">selective_dnf_default_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;lif&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;du&quot;</span><span class="p">:</span> <span class="mi">2009</span><span class="p">,</span>
+            <span class="s2">&quot;dv&quot;</span><span class="p">:</span> <span class="mi">2047</span><span class="p">,</span>
+            <span class="s2">&quot;vth&quot;</span><span class="p">:</span> <span class="mi">15</span>
+            <span class="p">},</span>
+    <span class="s2">&quot;rec_conn&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;amp_exc&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+        <span class="s2">&quot;width_exc&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+        <span class="s2">&quot;global_inh&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>It will define the parameters of the selective and multipeak activation kernel. Then connect them :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_create_processes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera</span> <span class="o">=</span> <span class="n">PropheseeCamera</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">prophesee_input_config</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">shape_grid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span>
+      <span class="c1">#self.lif_inp = LIF(shape=self.scaled_shape, **self.lif_config)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">dnf_multipeak</span> <span class="o">=</span> <span class="n">LIF</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">multipeak_lif_params</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">dnf_selective</span> <span class="o">=</span> <span class="n">LIF</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">selective_lif_params</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">py_receiver</span> <span class="o">=</span> <span class="n">RingBuffer</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span> <span class="n">buffer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">_connect_processes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="c1">#No real multipeaks, only the weights value</span>
+      <span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">s_out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">dnf_multipeak</span><span class="o">.</span><span class="n">a_in</span><span class="p">,</span>
+                 <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">Weights</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">multipeak_in_params</span><span class="p">)])</span>
+
+      
+      <span class="c1">#selective</span>
+      <span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dnf_multipeak</span><span class="o">.</span><span class="n">s_out</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dnf_selective</span><span class="o">.</span><span class="n">a_in</span><span class="p">,</span>
+                <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">Weights</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">multipeak_out_params</span><span class="p">)])</span>
+
+        <span class="c1"># Connections around selective dnf</span>
+      <span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dnf_selective</span><span class="o">.</span><span class="n">s_out</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dnf_selective</span><span class="o">.</span><span class="n">a_in</span><span class="p">,</span>
+               <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">Convolution</span><span class="p">(</span><span class="n">SelectiveKernel</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">selective_rec_params</span><span class="p">))])</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">dnf_selective</span><span class="o">.</span><span class="n">s_out</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">py_receiver</span><span class="o">.</span><span class="n">a_in</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The selective field will rpovide this result with the LEGO toy :
+<img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/selective_dnf.gif?raw=true" /></p>
+<p>If we apply a multipeak kernel with specific parameters, it can create a working memory by keeping a trail of the events :</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/multi_dnf.gif?raw=true" /></p>
+<p>With different parameters, the traces can be more sparse :</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/multi_dnf_big.gif?raw=true" /></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="prophesee_interface.html" class="btn btn-neutral float-left" title="EVK4 interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ros_loihi2.html" class="btn btn-neutral float-right" title="ROS Loihi 2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright workshop participant.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
