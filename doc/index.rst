@@ -23,6 +23,11 @@ This supports a more efficient computing of data and allows a considerable econo
 A neuromorphic hardware aims to compute information, and more specifically neural networks with a biological approach. Contrary to current hardware (CPU/GPU) where neural networks are synchronously computed, neuromorphic hardware takes example from biological neurons to compute spikes and thus drastically reduce power consumption.
 The spiking neural network models running on neuromorphic chips also offers a significant reduction in time execution and almost completely aligns with DVS. As we will see in the tutorials, the use of neuromorphic chips can even perform post processing filtering without sacrificing execution time. Here, we are going to use the Intel Loihi 2 as neuromorphic hardware.
 
+Code 
+----------
+
+This [repository](https://github.com/rouzinho/Neuromorphic-Computing.git) gathers the documentation, source code and the samples to run all the examples and tutorials.
+The source code can be found in the src folder.
 
 .. toctree::
    :hidden:
