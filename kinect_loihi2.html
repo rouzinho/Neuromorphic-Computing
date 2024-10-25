@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kinect Loihi 2 &mdash; NeuroCam TAU 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sensor Fusion" href="sensor_fusion.html" />
+    <link rel="prev" title="ROS Loihi 2" href="ros_loihi2.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            NeuroCam TAU
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Camera Devices</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Azure_Kinect.html">Azure Kinect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prophesee_EVK4.html">Prophesee EVK4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calibration.html">Calibration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Neuromorphic Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2.html">Intel Neuromorphic Chip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2_dnf.html">DNF Loihi 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Camera / Loihi Interface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ros_interface.html">ROS interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_interface.html">Kinect Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophesee_interface.html">EVK4 interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="evk4_loihi2.html">EVK4 Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_loihi2.html">ROS Loihi 2</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Kinect Loihi 2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#kinect-interface">Kinect interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sensor_fusion.html">Sensor Fusion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NeuroCam TAU</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Kinect Loihi 2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/kinect_loihi2.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kinect-loihi-2">
+<h1>Kinect Loihi 2<a class="headerlink" href="#kinect-loihi-2" title="Link to this heading"></a></h1>
+<p>This tutorial will show how to use the kinect interface in standalone in order to run depth images on Loihi.</p>
+<section id="kinect-interface">
+<h2>Kinect interface<a class="headerlink" href="#kinect-interface" title="Link to this heading"></a></h2>
+<p>The code to run this example is available inside the src <a class="reference external" href="https://github.com/rouzinho/Neuromorphic-Computing/tree/main/src/kinect">folder</a>. Before using it, remember to copy the kinect_reader folder inside in order to use the process. The sample file can be found among the other samples.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lif_default_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;vth&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s2">&quot;du&quot;</span><span class="p">:</span> <span class="mi">550</span><span class="p">,</span>
+    <span class="s2">&quot;dv&quot;</span><span class="p">:</span> <span class="mi">550</span>
+<span class="p">}</span>
+
+<span class="n">kinect_default_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;depth_shape&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">576</span><span class="p">,</span><span class="mi">640</span><span class="p">),</span>
+    <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/altair/Postdoc/Codes/kinect/simple.mkv&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;smooth&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;min_depth&quot;</span><span class="p">:</span> <span class="mi">720</span><span class="p">,</span>
+    <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="mi">728</span><span class="p">,</span>
+    <span class="s2">&quot;resize&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">118</span><span class="p">,</span><span class="mi">142</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>First we define the parameters of the LIF neural network where the images will be send. Then, we define the kinect parameters (resolution,filename,mode) and the depth distance we wish to cover. In this example, we chose to only display to object (to some extent since the kinect frame is not aligned with the table).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Architecture</span><span class="p">:</span>
+   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">num_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span><span class="n">use_loihi2</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span> <span class="o">=</span> <span class="n">num_steps</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">use_loihi2</span> <span class="o">=</span> <span class="n">use_loihi2</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">kinect_input_config</span> <span class="o">=</span> <span class="n">kinect_default_config</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_config</span> <span class="o">=</span> <span class="n">lif_default_config</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kinect_input_config</span><span class="p">[</span><span class="s2">&quot;resize&quot;</span><span class="p">]</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_loihi2</span><span class="p">:</span>
+         <span class="k">pass</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">run_cfg</span> <span class="o">=</span> <span class="n">Loihi2SimCfg</span><span class="p">(</span><span class="n">exception_proc_model_map</span><span class="o">=</span><span class="p">{</span><span class="n">Dense</span><span class="p">:</span> <span class="n">PyDenseModelBitAcc</span><span class="p">,</span><span class="n">LIF</span><span class="p">:</span> <span class="n">PyLifModelBitAcc</span><span class="p">,</span><span class="n">KinectReader</span><span class="p">:</span> <span class="n">LoihiDensePyKinectReader</span><span class="p">},</span><span class="n">select_tag</span><span class="o">=</span><span class="s2">&quot;fixed_pt&quot;</span><span class="p">)</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">_create_processes</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_connect_processes</span><span class="p">()</span>
+
+   <span class="k">def</span> <span class="nf">_create_processes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera</span> <span class="o">=</span> <span class="n">KinectReader</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kinect_input_config</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">shape_grid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_inp</span> <span class="o">=</span> <span class="n">LIF</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">lif_config</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">py_receiver</span> <span class="o">=</span> <span class="n">RingBuffer</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaled_shape</span><span class="p">,</span> <span class="n">buffer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">_connect_processes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">depth_out_port</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lif_inp</span><span class="o">.</span><span class="n">a_in</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lif_inp</span><span class="o">.</span><span class="n">s_out</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">py_receiver</span><span class="o">.</span><span class="n">a_in</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1"># Run</span>
+      <span class="n">run_cnd</span> <span class="o">=</span> <span class="n">RunSteps</span><span class="p">(</span><span class="n">num_steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_steps</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">run_cnd</span><span class="p">,</span> <span class="n">run_cfg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run_cfg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here, we only need to create two simple processes and connect the KinectReader with the LIF. The result of this code is a smooth transformation of the depth image and only use distance between 720mm and 728mm.</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/smooth_object.gif?raw=true" /></p>
+<p>If we change the mode to “transform” and keep the same min-max values, we remove the fisheye distortion of the image :</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/transformed_object.gif?raw=true" /></p>
+<p>By changing the depth values, it is possible to select both object and robot spiking :</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/transform_object_robot.gif?raw=true" /></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ros_loihi2.html" class="btn btn-neutral float-left" title="ROS Loihi 2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sensor_fusion.html" class="btn btn-neutral float-right" title="Sensor Fusion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright workshop participant.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROS interface &mdash; NeuroCam TAU 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Kinect Interface" href="kinect_interface.html" />
+    <link rel="prev" title="DNF Loihi 2" href="Loihi2_dnf.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            NeuroCam TAU
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Camera Devices</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Azure_Kinect.html">Azure Kinect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prophesee_EVK4.html">Prophesee EVK4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calibration.html">Calibration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Neuromorphic Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2.html">Intel Neuromorphic Chip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2_dnf.html">DNF Loihi 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Camera / Loihi Interface</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ROS interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#recording-data">Recording data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setup-the-depth-camera">Setup the depth camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rosbags">Rosbags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#loihi-process-to-use-the-rosbags">Loihi process to use the rosbags</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_interface.html">Kinect Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophesee_interface.html">EVK4 interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="evk4_loihi2.html">EVK4 Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_loihi2.html">ROS Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_loihi2.html">Kinect Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensor_fusion.html">Sensor Fusion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NeuroCam TAU</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ROS interface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ros_interface.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ros-interface">
+<h1>ROS interface<a class="headerlink" href="#ros-interface" title="Link to this heading"></a></h1>
+<p>This page introduces the ROS process we developed in order to read depth images from a rosbag and use them as input to the Loihi chip.</p>
+<section id="recording-data">
+<h2>Recording data<a class="headerlink" href="#recording-data" title="Link to this heading"></a></h2>
+<p>Before using the framwork, we first need to record data inside a rosbag. The point of using rosbags is to provide a more generic way of capturing depth data. This means that you could use any depth camera that works with ROS even if we are using an Azure kinect here.</p>
+<section id="setup-the-depth-camera">
+<h3>Setup the depth camera<a class="headerlink" href="#setup-the-depth-camera" title="Link to this heading"></a></h3>
+<p>First you need to setup the depth camera as demonstrated in the Calibration section. Then, we are gonna use the capture_pcl package to stream the depth images from the camera. This package performs severals operation on the raw depth obtained by the kinect (filtering, depth enhancing) and produces a refined stream of images to the ROS topic /depth_perception/depth. In order to use the package, you should setup the parameters within the launch file with the same one you used in the calibration section :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">launch</span><span class="o">&gt;</span>
+   <span class="c1">#use this param if you want to transform the image</span>
+   <span class="o">&lt;</span><span class="n">arg</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hom&quot;</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">/&gt;</span>
+   <span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;homography&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;$(arg hom)&quot;</span> <span class="o">/&gt;</span>
+   <span class="o">&lt;</span><span class="n">group</span> <span class="k">if</span><span class="o">=</span><span class="s2">&quot;$(arg hom)&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">file</span><span class="o">=</span><span class="s2">&quot;$(find capture_pcl)/config/homography.yaml&quot;</span> <span class="o">/&gt;</span>
+   <span class="o">&lt;/</span><span class="n">group</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;init_params&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;bool&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="o">/&gt;</span>
+   <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">param</span><span class="o">=</span><span class="s2">&quot;crop_min_x&quot;</span><span class="o">&gt;-</span><span class="mf">600.919</span><span class="o">&lt;/</span><span class="n">rosparam</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">param</span><span class="o">=</span><span class="s2">&quot;crop_max_x&quot;</span><span class="o">&gt;-</span><span class="mf">140.916</span><span class="o">&lt;/</span><span class="n">rosparam</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">param</span><span class="o">=</span><span class="s2">&quot;crop_min_y&quot;</span><span class="o">&gt;-</span><span class="mf">358.34</span><span class="o">&lt;/</span><span class="n">rosparam</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">param</span><span class="o">=</span><span class="s2">&quot;crop_max_y&quot;</span><span class="o">&gt;</span><span class="mf">402.577</span><span class="o">&lt;/</span><span class="n">rosparam</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">param</span><span class="o">=</span><span class="s2">&quot;crop_min_z&quot;</span><span class="o">&gt;-</span><span class="mf">600.919</span><span class="o">&lt;/</span><span class="n">rosparam</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">param</span><span class="o">=</span><span class="s2">&quot;crop_max_z&quot;</span><span class="o">&gt;</span><span class="mf">26.9382</span><span class="o">&lt;/</span><span class="n">rosparam</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">param</span><span class="o">=</span><span class="s2">&quot;ax&quot;</span><span class="o">&gt;</span><span class="mf">1.34782</span><span class="o">&lt;/</span><span class="n">rosparam</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">param</span><span class="o">=</span><span class="s2">&quot;bx&quot;</span><span class="o">&gt;</span><span class="mf">809.928</span><span class="o">&lt;/</span><span class="n">rosparam</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">param</span><span class="o">=</span><span class="s2">&quot;ay&quot;</span><span class="o">&gt;</span><span class="mf">1.10393</span><span class="o">&lt;/</span><span class="n">rosparam</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">param</span><span class="o">=</span><span class="s2">&quot;by&quot;</span><span class="o">&gt;</span><span class="mf">395.583</span><span class="o">&lt;/</span><span class="n">rosparam</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">param</span><span class="o">=</span><span class="s2">&quot;az&quot;</span><span class="o">&gt;</span><span class="mf">1.59272</span><span class="o">&lt;/</span><span class="n">rosparam</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">param</span><span class="o">=</span><span class="s2">&quot;bz&quot;</span><span class="o">&gt;</span><span class="mf">957.095</span><span class="o">&lt;/</span><span class="n">rosparam</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">node</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;capture_pcl&quot;</span> <span class="n">pkg</span><span class="o">=</span><span class="s2">&quot;capture_pcl&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;capture_pcl_node&quot;</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;screen&quot;</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">launch</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>If you want to use the homography matrix to align the image to the DVS frame, you should place the file generated by the calibration inside the config folder.
+Once the parameters are set, you can compile the code :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#assuming you placed the capture_pcl pkg inside &quot;your_ROS_workspace/src/&quot;</span>
+<span class="n">cd</span> <span class="s2">&quot;your_ROS_workspace&quot;</span>
+<span class="n">catkin_make</span>
+</pre></div>
+</div>
+<p>Then execute the package :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">capture_pcl</span> <span class="n">capture_depth</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+</section>
+<section id="rosbags">
+<h3>Rosbags<a class="headerlink" href="#rosbags" title="Link to this heading"></a></h3>
+<p>To record the streamed depth images inside a rosbag, open a new terminal :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rosbag</span> <span class="n">record</span> <span class="o">/</span><span class="n">depth_perception</span><span class="o">/</span><span class="n">depth</span>
+</pre></div>
+</div>
+<p>The recording stops once you hit Ctrl-C on the command you just typed.
+You should see a file named “current-date-time”.bag. You can rename it to your liking. It is often necessary to modify (cut, change time…) of the recording. I invite you to check both documentation on rosbag <a class="reference external" href="https://wiki.ros.org/rosbag/Tutorials/Recording%20and%20playing%20back%20data">here</a> and <a class="reference external" href="https://wiki.ros.org/rosbag/Commandline">here</a></p>
+</section>
+</section>
+<section id="loihi-process-to-use-the-rosbags">
+<h2>Loihi process to use the rosbags<a class="headerlink" href="#loihi-process-to-use-the-rosbags" title="Link to this heading"></a></h2>
+<p>In order to use the process that will retrieve the depth images from the rosbags and transform them as inputs to Loihi, you need to install the python rosbags library :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#activate the virtualenv where you installed LAVA</span>
+<span class="n">source</span> <span class="n">neuro</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">rosbags</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">rosbags</span><span class="o">-</span><span class="n">image</span>
+</pre></div>
+</div>
+<p>There are 2 processes that can be used to read images from rosbags. You can find the folder containing the code <a class="reference external" href="https://github.com/rouzinho/Neuromorphic-Computing/tree/main/src/bags_reader">here</a>. When using the code, include the folder next to the python script that run the simulation.</p>
+<p>The process.py is in charge to simply read images from the rosbags and send it through a port :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.decorator</span> <span class="kn">import</span> <span class="n">implements</span><span class="p">,</span> <span class="n">requires</span><span class="p">,</span> <span class="n">tag</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.model.py.model</span> <span class="kn">import</span> <span class="n">PyLoihiProcessModel</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.model.py.ports</span> <span class="kn">import</span> <span class="n">PyOutPort</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.model.py.type</span> <span class="kn">import</span> <span class="n">LavaPyType</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.process.ports.ports</span> <span class="kn">import</span> <span class="n">OutPort</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.process.process</span> <span class="kn">import</span> <span class="n">AbstractProcess</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.resources</span> <span class="kn">import</span> <span class="n">CPU</span>
+<span class="kn">from</span> <span class="nn">lava.magma.core.sync.protocols.loihi_protocol</span> <span class="kn">import</span> <span class="n">LoihiProtocol</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">rosbags.highlevel</span> <span class="kn">import</span> <span class="n">AnyReader</span>
+<span class="kn">from</span> <span class="nn">rosbags.typesys</span> <span class="kn">import</span> <span class="n">Stores</span><span class="p">,</span> <span class="n">get_typestore</span>
+<span class="kn">from</span> <span class="nn">rosbags.image</span> <span class="kn">import</span> <span class="n">message_to_cvimage</span>
+
+<span class="k">class</span> <span class="nc">BagReader</span><span class="p">(</span><span class="n">AbstractProcess</span><span class="p">):</span>
+<span class="w">   </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Process that read depth images from ros bag file and send them through outport </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename: str</span>
+<span class="sd">        String to filename</span>
+<span class="sd">    topic: str</span>
+<span class="sd">        Topic of the bag from where to retrieve the datas.</span>
+<span class="sd">    sensor_shape: tuple</span>
+<span class="sd">        Shape of the image / kinect camera.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">depth_shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span>
+            <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">topic</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">resize</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">filename</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;you must provide the path of a bag&quot;</span>
+         <span class="p">)</span>
+      <span class="k">if</span> <span class="n">topic</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;you must provide a topic to listen to&quot;</span>
+         <span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">topic</span> <span class="o">=</span> <span class="n">topic</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">resize</span> <span class="o">=</span> <span class="n">resize</span>
+      <span class="k">if</span> <span class="n">resize</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">depth_shape</span> <span class="o">=</span> <span class="n">resize</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">depth_shape</span> <span class="o">=</span> <span class="n">depth_shape</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">depth_out_port</span> <span class="o">=</span> <span class="n">OutPort</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">depth_shape</span><span class="p">)</span>
+      <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+         <span class="n">depth_shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">depth_shape</span><span class="p">,</span>
+         <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+         <span class="n">topic</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">topic</span><span class="p">,</span>
+         <span class="n">resize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resize</span>
+      <span class="p">)</span>
+
+<span class="c1">#class implementing the bag reader</span>
+<span class="nd">@implements</span><span class="p">(</span><span class="n">proc</span><span class="o">=</span><span class="n">BagReader</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="n">LoihiProtocol</span><span class="p">)</span>
+<span class="nd">@requires</span><span class="p">(</span><span class="n">CPU</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">LoihiDensePyBagReader</span><span class="p">(</span><span class="n">PyLoihiProcessModel</span><span class="p">):</span>
+   <span class="n">depth_out_port</span><span class="p">:</span> <span class="n">PyOutPort</span> <span class="o">=</span> <span class="n">LavaPyType</span><span class="p">(</span><span class="n">PyOutPort</span><span class="o">.</span><span class="n">VEC_DENSE</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proc_params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">proc_params</span><span class="p">)</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">_file_name</span> <span class="o">=</span> <span class="n">proc_params</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file_name</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_typestore</span> <span class="o">=</span> <span class="n">get_typestore</span><span class="p">(</span><span class="n">Stores</span><span class="o">.</span><span class="n">ROS1_NOETIC</span><span class="p">)</span> 
+      <span class="bp">self</span><span class="o">.</span><span class="n">_topic</span> <span class="o">=</span> <span class="n">proc_params</span><span class="p">[</span><span class="s2">&quot;topic&quot;</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_depth_shape</span> <span class="o">=</span> <span class="n">proc_params</span><span class="p">[</span><span class="s2">&quot;depth_shape&quot;</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_resize</span> <span class="o">=</span> <span class="n">proc_params</span><span class="p">[</span><span class="s2">&quot;resize&quot;</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_ind_f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ind_l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_bag</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_current_ind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ind_f</span>
+
+   <span class="k">def</span> <span class="nf">run_spk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1">#print(&quot;get image&quot;)</span>
+      <span class="n">depth_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_bag_frame</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">depth_out_port</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">depth_image</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_current_ind</span> <span class="o">+=</span> <span class="mi">1</span>
+
+   <span class="k">def</span> <span class="nf">_get_bag_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="n">img</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_ind</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ind_l</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">_current_ind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ind_l</span>
+      <span class="k">with</span> <span class="n">AnyReader</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">],</span> <span class="n">default_typestore</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_typestore</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+         <span class="n">connections</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">reader</span><span class="o">.</span><span class="n">connections</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">topic</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_topic</span><span class="p">]</span>
+         <span class="k">for</span> <span class="n">connection</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">rawdata</span> <span class="ow">in</span> <span class="n">reader</span><span class="o">.</span><span class="n">messages</span><span class="p">(</span><span class="n">connections</span><span class="o">=</span><span class="n">connections</span><span class="p">):</span>
+               <span class="n">msg</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">rawdata</span><span class="p">,</span> <span class="n">connection</span><span class="o">.</span><span class="n">msgtype</span><span class="p">)</span>
+               <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">seq</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_ind</span><span class="p">:</span>
+                  <span class="n">img</span> <span class="o">=</span> <span class="n">message_to_cvimage</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                  <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resize</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                     <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_depth_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">_depth_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>  <span class="n">interpolation</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">INTER_NEAREST</span><span class="p">)</span>
+               
+      <span class="k">return</span> <span class="n">img</span>
+
+   <span class="c1">#return first and last index of msg (seq doesn&#39;t start at 0)</span>
+   <span class="k">def</span> <span class="nf">_init_bag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">ind_f</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="k">with</span> <span class="n">AnyReader</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">],</span> <span class="n">default_typestore</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_typestore</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+         <span class="n">count</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">message_count</span>
+         <span class="n">connections</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">reader</span><span class="o">.</span><span class="n">connections</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">topic</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_topic</span><span class="p">]</span>
+         <span class="k">for</span> <span class="n">connection</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">rawdata</span> <span class="ow">in</span> <span class="n">reader</span><span class="o">.</span><span class="n">messages</span><span class="p">(</span><span class="n">connections</span><span class="o">=</span><span class="n">connections</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">rawdata</span><span class="p">,</span> <span class="n">connection</span><span class="o">.</span><span class="n">msgtype</span><span class="p">)</span>
+            <span class="c1">#print(msg)</span>
+            <span class="k">if</span> <span class="n">first</span><span class="p">:</span>
+               <span class="n">ind_f</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">seq</span>
+               <span class="k">break</span>
+      <span class="n">ind_l</span> <span class="o">=</span> <span class="n">ind_f</span> <span class="o">+</span> <span class="n">count</span><span class="o">-</span><span class="mi">1</span>
+
+      <span class="k">return</span> <span class="n">ind_f</span><span class="p">,</span><span class="n">ind_l</span>
+   
+   <span class="k">def</span> <span class="nf">_pause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Pause was called by the runtime&quot;&quot;&quot;</span>
+      <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_pause</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">t_pause</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time_ns</span><span class="p">()</span>
+
+   <span class="k">def</span> <span class="nf">_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Stop was called by the runtime&quot;&quot;&quot;</span>
+      <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The topic name is the one you recorded data from (/depth_perception/depth). The sensor_shape parameters is the image size of the depth. In our case, the capture_pcl package set up the images at 1204x642. You can of course change that parameter inside the capture_pcl code.This process get an index of the rosbags and is in charge of sending the images one by one through the output port.
+The second process rest on the same principle. However, we include the possibility to sync the image according to data entering the process. This is essential if you want to synchronize the kinect and the Prophesee together since they run on different time scale.
+Basically, the Prophesee process (next section) sends timestamps to this rosbag process which in turn decides the flow of images to send based on the timestamps received.</p>
+<p>In the tutorial section, we will demonstrate how to use the rosbags process in standalone or sync with the prophesee camera.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Loihi2_dnf.html" class="btn btn-neutral float-left" title="DNF Loihi 2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kinect_interface.html" class="btn btn-neutral float-right" title="Kinect Interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright workshop participant.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

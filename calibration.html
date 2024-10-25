@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calibration &mdash; NeuroCam TAU 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Intel Neuromorphic Chip" href="Loihi2.html" />
+    <link rel="prev" title="Prophesee EVK4" href="Prophesee_EVK4.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            NeuroCam TAU
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Camera Devices</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Azure_Kinect.html">Azure Kinect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prophesee_EVK4.html">Prophesee EVK4</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Calibration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#robot-kinect-calibration">Robot/Kinect calibration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#extrinsic-parameters">Extrinsic parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#depthmap-calibration">Depthmap calibration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#computing-the-homography">Computing the Homography</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Neuromorphic Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2.html">Intel Neuromorphic Chip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Loihi2_dnf.html">DNF Loihi 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Camera / Loihi Interface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ros_interface.html">ROS interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_interface.html">Kinect Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophesee_interface.html">EVK4 interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="evk4_loihi2.html">EVK4 Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_loihi2.html">ROS Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinect_loihi2.html">Kinect Loihi 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensor_fusion.html">Sensor Fusion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NeuroCam TAU</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Calibration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/calibration.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="calibration">
+<h1>Calibration<a class="headerlink" href="#calibration" title="Link to this heading"></a></h1>
+<p>This page is dedicated to the calibration of both cameras. The goal is to align the depth camera and the DVS on the same frame with an homography.</p>
+<section id="robot-kinect-calibration">
+<h2>Robot/Kinect calibration<a class="headerlink" href="#robot-kinect-calibration" title="Link to this heading"></a></h2>
+<section id="extrinsic-parameters">
+<h3>Extrinsic parameters<a class="headerlink" href="#extrinsic-parameters" title="Link to this heading"></a></h3>
+<p>We will calibrate the depth camera by using ROS and specific packages we developed. First, we introduce the robot and its setup. The robot used is the PincherX150 from <a class="reference external" href="https://docs.trossenrobotics.com/interbotix_xsarms_docs/specifications/px150.html">Trossen robotics</a>. You will find the installation and setup on the website. In our case, we will use the Kinect camera instead of the Intel D435 used by the manufacturer.
+In the xsarm_perception.launch, replace the line</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">&lt;</span><span class="n">arg</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;cloud_topic&quot;</span>                       <span class="n">default</span><span class="o">=</span><span class="s2">&quot;/camera/depth/color/points&quot;</span><span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>by</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">&lt;</span><span class="n">arg</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;cloud_topic&quot;</span>                       <span class="n">default</span><span class="o">=</span><span class="s2">&quot;/points2&quot;</span><span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>which is the topic where the azure kinect is publishing the pointcloud. Then we need to make some modifications inside the ros kinect wrapper. Open the driver.launch file inside the azure_kinect_ros_wrapper package and do the following changes :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">&lt;</span><span class="n">arg</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;cloud_topic&quot;</span>                       <span class="n">default</span><span class="o">=</span><span class="s2">&quot;/points2&quot;</span><span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>This essentially setup the depth mode to a narrower field of view.
+Then you can begin the robot camera calibration by starting the kinect. Don’t forget to setup the April TAG as explained in <a class="reference external" href="https://docs.trossenrobotics.com/interbotix_xsarms_docs/ros1_packages/perception_pipeline_configuration.html">the documentation</a> . In a terminal, go to your ROS workspace and type :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">&lt;</span><span class="n">arg</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;cloud_topic&quot;</span>                       <span class="n">default</span><span class="o">=</span><span class="s2">&quot;/points2&quot;</span><span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>Open an other terminal and type :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">interbotix_xsarm_perception</span> <span class="n">xsarm_perception</span><span class="o">.</span><span class="n">launch</span> <span class="n">robot_model</span><span class="o">:=</span><span class="n">px150</span> <span class="n">use_pointcloud_tuner_gui</span><span class="o">:=</span><span class="n">true</span> <span class="n">use_armtag_tuner_gui</span><span class="o">:=</span><span class="n">true</span>
+</pre></div>
+</div>
+<p>This will open the configuration setup and you can follow the instruction from the documentation.
+<img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/robot_settings.png?raw=true" /></p>
+<p>Once your robot arm is calibrated with the camera and that the extrinsic calibration between them seems accurate, you can proceed.</p>
+</section>
+<section id="depthmap-calibration">
+<h3>Depthmap calibration<a class="headerlink" href="#depthmap-calibration" title="Link to this heading"></a></h3>
+<p>We developed a simple tool that generate a depthmap based on the pointcloud delivered by the Kinect. It is a ROS package that will find the right parameters in order to project the 3D points on a surface through a simple linear transformation. First, copy the package visualize_depth present in the src folder of this documentation and copy it inside your ROS workspace :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">-</span><span class="n">R</span> <span class="n">Neuromorphic</span><span class="o">-</span><span class="n">Computing</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">visualize_depth</span> <span class="s2">&quot;your_ros_workspace/src&quot;</span>
+<span class="n">cd</span> <span class="s2">&quot;your_ros_workspace&quot;</span>
+<span class="n">catkin_make</span>
+</pre></div>
+</div>
+<p>Now modify the launch file inside the visualize_depth package :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;init_params&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;bool&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>This means that the package will print the right parameters for your environment at start. Then, can start the package :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">visualize_depth</span> <span class="n">visualize_depth</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/visualize_depth.png?raw=true" />
+You can stop the program (Ctrl-C) after a few seconds once the values are printed inside the terminal. Then, insert these values inside the launch file and set the init_params to false. From now on, your depth camera is calibrated to your environment. You can use the package visualize_frame to verify that an object is in the frame.</p>
+</section>
+</section>
+<section id="computing-the-homography">
+<h2>Computing the Homography<a class="headerlink" href="#computing-the-homography" title="Link to this heading"></a></h2>
+<p>The idea is to select several points in the depth frame and find the corresponding points within the DVS frame. However, the only way to vizualize a static object on the prophesee camera is to use a blinking LED. A handcraft blinking LED (100Hz) with an Arduino is easy to setup. Then, we have to define several location on the scene. Use the visualize_depth package and metastudio to make sure the locations you chose are visible in both frame.</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/scene.jpg?raw=true" /></p>
+<p>To gather points in the depthmap, we are going to use the package calibration_hom. Copy the package inside your ROS workspace :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">-</span><span class="n">R</span> <span class="n">Neuromorphic</span><span class="o">-</span><span class="n">Computing</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">calibration_hom</span> <span class="s2">&quot;your_ros_workspace/src&quot;</span>
+<span class="n">cd</span> <span class="s2">&quot;your_ros_workspace&quot;</span>
+<span class="n">catkin_make</span>
+</pre></div>
+</div>
+<p>Then copy the depthmap parameters from the visualize_depth launch file to the calibration_hom launchfile (e.g calibrate_depth.launch). You should also indicate the path where the points are going to be saved. The package locate the depth of the LED then save these coordinates inside a file.</p>
+<p>To gather points within the DVS camera, you can use the folder homography_dvs and more particularly the python code calibration.py. This script detect the blinking led and save the coordinates inside a text file.</p>
+<p>To resume, the ROS package calibration_hom detect the LED in the depthmap and save the coordinates inside a txt file. The script calibration.py does the same for the DVS in a different txt file. Both txt files will contains the coordinates of the LED in the respective frames.</p>
+<p>The protocol is simple. First Place the blinking LED at the first location :</p>
+<p><img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/led.jpg?raw=true" /></p>
+<p>Start the calibration_hom package :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">calibration_hom</span> <span class="n">calibrate_depth</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>You should see the depth of the LED and the red dot represent the saved point :
+<img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/screen_calib_depth.png?raw=true" /></p>
+<p>You can stop the program and start the calibration.py</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">calibration</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>You should see the blinking LED from the DVS for a few second, then the program stop and the position of the point is saved in the txt file.
+<img alt="test" src="https://github.com/rouzinho/Neuromorphic-Computing/blob/main/img/calib_dvs.gif?raw=true" /></p>
+<p>You can now move the LED to a new location and start again. For an accurate calibration, 8-9 points are necessary. You should place the 2 text files containings the points inside the homography_dvs folder.
+Once you have done that, you can start the script homography.py inside the homography_dvs folder.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">homography</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>The program will compute the homography transform from the depth camera to the DVS and output a YAML file that would perform the transformation of the frame later on. This file will be used by the ROS kinect interface to transform the depth data before using them as input to the Neuromorphic chip Loihi 2.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Prophesee_EVK4.html" class="btn btn-neutral float-left" title="Prophesee EVK4" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Loihi2.html" class="btn btn-neutral float-right" title="Intel Neuromorphic Chip" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright workshop participant.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
