@@ -26,7 +26,7 @@ The spiking neural network models running on neuromorphic chips also offers a si
 Code 
 ----------
 
-This [repository](https://github.com/rouzinho/Neuromorphic-Computing.git) gathers the documentation, source code and the samples to run all the examples and tutorials.
+This repository https://github.com/rouzinho/Neuromorphic-Computing.git gathers the documentation, source code and the samples to run all the examples and tutorials.
 The source code can be found in the src folder.
 
 .. toctree::
